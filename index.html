@@ -1,0 +1,43 @@
+<html>
+<!DOCTYPE html>
+
+<head>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw&callback=initMap" async defer></script>
+    <script src 'bower_components/knockout/dist/knockout.js'></script>
+    <script src='views/map_view.js'></script>
+<style>
+   html, body {
+     height: 100%;
+     margin: 0;
+     padding: 0;
+   }
+   #map {
+     height: 100%;
+   }
+ </style>
+</head>
+
+<body>
+    <div class='list'>
+      <ul data-bind= 'forEach: places'>
+        <li data-bind='text: $data'></li>
+      </ul>
+    </div>
+    <div id='map'>Map is loading</div>
+    <script>
+    var map;
+    var map_div = document.getElementById('map');
+    function initMap() {
+        map = new google.maps.Map(map_div, {
+            center: {
+                lat: 44.2561727,
+                lng: -73.8008399
+            },
+            zoom: 10
+        });
+    }
+    </script>
+</body>
+
+</html>

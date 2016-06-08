@@ -1,0 +1,21 @@
+{
+  "name": "dacks_climber",
+  "authors": [
+    "dengjonathan <dengjonathan@gmail.com>"
+  ],
+  "description": "jquery",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.4",
+    "knockout": "^3.4.0"
+  }
+}
