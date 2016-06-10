@@ -1,0 +1,36 @@
+<!Doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>an spa using google maps</title>
+  <script data-main="app/config" src="bower_components/requirejs/require.js"></script>
+</head>
+<body>
+  <h1>Dacks_layabout running!</h1>
+  <div>
+      Data Binding:
+      <span class="status" data-bind="text: status">Inactive</span>
+  </div>
+
+  <div id='map'>
+    Map Loading
+  </div>
+
+  <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw&callback=initMap" async defer></script>
+  <script type='text/javascript' src='app/maps_api.js'></script>
+  <script>
+  var map;
+
+  function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+          center: {
+              lat: 44.2561727,
+              lng: -73.8008399
+          },
+          zoom: 10
+      });
+  }
+
+  </script>
+</body>
+</html>
