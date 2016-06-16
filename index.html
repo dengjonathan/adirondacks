@@ -7,15 +7,15 @@
 </head>
 <body>
   <h1>Dacks_layabout running!</h1>
-  <div>
+  <div class = 'status'>
       Data Binding:
       <span class="status" data-bind="text: status">Inactive</span>
   </div>
 
-  <div id='map'>
+  <div class = 'google_map' id='map'>
     Map Loading
   </div>
-
+  <script type='text/javascript' src='app/main.js'></script>
   <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw&callback=initMap" async defer></script>
   <script type='text/javascript' src='app/maps_api.js'></script>
   <script>
@@ -30,7 +30,6 @@
           zoom: 10
       });
   }
-
   </script>
 </body>
 </html>

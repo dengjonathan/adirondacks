@@ -4,6 +4,7 @@
 define(["jquery", "knockout"], function($, ko) {
   var viewModel = {
     status: ko.observable('active')
+    
   };
   ko.applyBindings(viewModel, $('html')[0]);
 });
