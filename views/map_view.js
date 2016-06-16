@@ -1,9 +1,13 @@
-console.log('ready');
+var map;
 
-function ListViewModel(){
-var self = this;
-self.places = ko.observableArray(['Lake Placid', 'MacKenzie Boulders', 'Roaring Brook Falls'])
-
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+            lat: 44.2561727,
+            lng: -73.8008399
+        },
+        zoom: 10
+    });
 }
 
-ko.applyBindings(new ListViewModel());
+initMap();
