@@ -1,32 +1,35 @@
-<html>
 <!DOCTYPE html>
+<html>
 
 <head>
-  <style>
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-
-    #map {
-      height: 100%;
-    }
-  </style>
+  <script type='text/javascript' src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script type='text/javascript' src='bower_components/knockout/dist/knockout.js'></script>
+  <script type='text/javascript' src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
 </head>
 
 <body>
-  <div class='list'>
-    <p data-bind="text: status">Status Loading</p>
-    <ul data-bind='foreach: places'>
-      <li data-bind='text: $data'></li>
+  <div class='filters'>
+    <ul>
+      <li>
+        Type
+      </li>
+      <li>
+        Within # of Miles of Town
+      </li>
     </ul>
   </div>
-  <div id='map'>Map is loading</div>
 
-  <script type='text/javascript' src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script type='text/javascript' src='bower_components/knockout/dist/knockout.js'></script>
+  <div class=''>
+    <div class='list'>
+      <p data-bind="text: status">Status Loading</p>
+      <ul data-bind='foreach: places'>
+        <li data-bind='text: $data'></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class='map' id='map'>Map is loading</div>
+
   <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw&callback=initMap" async defer></script>
   <script type='text/javascript' src='app/maps_api.js'></script>
   <script type='text/javascript' src='app/main.js'></script>
