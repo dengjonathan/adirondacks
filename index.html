@@ -5,13 +5,22 @@
   <script type='text/javascript' src="bower_components/jquery/dist/jquery.min.js"></script>
   <script type='text/javascript' src='bower_components/knockout/dist/knockout.js'></script>
   <script type='text/javascript' src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
+  <script type='text/javascript' src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
+  <link type='text/css' rel='stylesheet' href='styles/styles.css' />
 </head>
 
 <body>
   <div class='filters'>
     <ul>
       <li>
-        Type
+        Type:
+        <!-- Change this to bind the types in viewModel to the selector -->
+        <select>
+          <option value="climb">Climb</option>
+          <option value="food">Food</option>
+          <option value="gear">Gear</option>
+          <option value="bivouac">Bivouac</option>
+        </select>
       </li>
       <li>
         Within # of Miles of Town
@@ -19,19 +28,35 @@
     </ul>
   </div>
 
-  <div class=''>
-    <div class='list'>
-      <p data-bind="text: status">Status Loading</p>
-      <ul data-bind='foreach: places'>
-        <li data-bind='text: $data'></li>
-      </ul>
-    </div>
+  <div class='newLoc'>
+    <form>
+      <input type=text/>
+
+    </form>
   </div>
-  
+
+  <div>
+    <p>ViewModel Status: <span data-bind="text: status">Status Loading</span></p>
+    <table>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Description</th>
+      <tbody data-bind='foreach: locations2'>
+        <tr>
+          <td data-bind='text: $data.loc_name'></td>
+          <td data-bind='text: $data.lat'></td>
+          <td data-bind='text: $data.desc'></td>
+        </tr>
+      </tbody>
+    </table>
+    <button data-bind='click:addLoc'>Add Location</button>
+  </div>
+
   <div class='map' id='map'>Map is loading</div>
 
   <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw&callback=initMap" async defer></script>
-  <script type='text/javascript' src='app/maps_api.js'></script>
+  <script type='text/javascript' src='app/map_model.js'></script>
+  <script type='text/javascript' src='app/model.js'></script>
   <script type='text/javascript' src='app/main.js'></script>
 </body>
 

@@ -5,13 +5,14 @@ var CENTER_COORD = {
 
 function initMap() {
   console.log('Google Map Initiating');
-  
+
   var mapDiv = document.getElementById('map');
 
   var mapOptions = {
     center: CENTER_COORD,
     zoom: 12,
-    draggable: true
+    draggable: true,
+    mapTypeId: google.maps.MapTypeId.HYBRID
   };
 
   var map = new google.maps.Map(mapDiv, mapOptions);
