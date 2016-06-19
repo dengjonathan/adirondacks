@@ -1,27 +1,34 @@
-var data = [
-          {
-            name: "Beer Walls",
-            lat: 44.192149,
-            long: -73.778619,
-            loc_type: "climb",
-            desc: "A cragging wall"
-          }, {
-            name: "Noonmark Diner",
-            lat: 44.292149,
-            long: -73.898619,
-            loc_type: "food",
-            desc: "Classic diner on the Keene Valley Main Street"
-}];
+var data = [{
+    name: "Beer Walls",
+    lat: 44.192149,
+    lng: -73.778619,
+    loc_type: "climb",
+    desc: "A cragging wall"
+  }, {
+    name: "Noonmark Diner",
+    lat: 44.292149,
+    lng: -73.898619,
+    loc_type: "food",
+    desc: "Classic diner on the Keene Valley Main Street"
+  }, {
+    name: 'Roaring Brook Falls',
+    lat: 44.150377,
+    lng: -73.7628508,
+    loc_type: 'climb',
+    desc: 'A great WI2+ in the winter.  Sketchy though.'
+  }
+
+];
 
 //Base location superclass
 var Location = function(arg) {
   var self = this;
-  this.loc_name = ko.observable(arg.name);
+  this.name = ko.observable(arg.name);
   this.lat = ko.observable(arg.lat);
-  this.long = ko.observable(arg.long);
+  this.lng = ko.observable(arg.lng);
   this.location = ko.computed(function() {
-    return self.lat() + ", " + self.long();
-  })
+    return self.lat() + ", " + self.lng();
+  });
   this.desc = ko.observable(arg.desc);
   this.loc_type = ko.observable(arg.loc_type);
 };
@@ -29,6 +36,28 @@ var Location = function(arg) {
 Location.prototype = {
   changeName: function(name) {
     this.loc_name = name;
+  }
+}
+
+// Google Map marker constructor
+var Marker = function(name, lat, lng, loc_type) {
+  var new_mark = new google.maps.Marker({
+    name: name,
+    position: {
+      lat: lat,
+      lng: lng
+    }
+  });
+  new_mark.addListener('click', toggleBounce); //TODO; add some useful feature for listeners
+  return new_mark;
+};
+
+// google place holder funciton to add bounce
+function toggleBounce(marker) {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
   }
 }
 

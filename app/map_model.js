@@ -17,15 +17,8 @@ function initMap() {
     mapTypeId: google.maps.MapTypeId.HYBRID
   };
 
-   map = new google.maps.Map(mapDiv, mapOptions);
+  map = new google.maps.Map(mapDiv, mapOptions);
 
-
-  var marker = new google.maps.Marker({
-    position: CENTER_COORD,
-    title: "Hello World!"
-  });
-
-  marker.setMap(map);
 };
 
-// var map = initMap();
+initMap();

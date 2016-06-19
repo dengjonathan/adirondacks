@@ -7,59 +7,84 @@
   <script type='text/javascript' src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
   <script type='text/javascript' src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
   <link type='text/css' rel='stylesheet' href='styles/styles.css' />
+  <script type='text/javascript' src="bower_components/slideout.js/dist/slideout.min.js"></script>
 </head>
 
 <body>
-  <div class='filters'>
-    <form data-bind='submit: changeFilter'>
-      <select name='loc_type' data-bind='options: loc_types'></select>
-      Within
-      <select name ='mileage' data-bind='options: mileage'></select> of Miles of Town
-      <button type='submit'>Change Filter</button>
-    </form>
-  </div>
 
-  <div class='addLoc'>
-    <form data-bind='submit: addLoc'>
-      <select name='loc_type' data-bind='options: loc_types'></select>
-      <input type='text' name='name' />
-      <input type='text' name='lat'>
-      <input type='text' name='long'>
-      <input type='text' name='desc'>
-      <button type='submit'>Add Location</button>
-    </form>
-  </div>
+  <nav id="menu">
+    <header>
+      <h2>Menu</h2>
+    </header>
+  </nav>
 
-  <div>
-    <p>ViewModel Status: <span data-bind="text: status">Status Loading</span></p>
-    <table>
-      <th>
-        Type
-      </th>
-      <th>Name</th>
-      <th>Location</th>
-      <th>Description</th>
-      <tbody data-bind='foreach: locations'>
-        <tr>
-          <td data-bind='text: $data.loc_type'></td>
-          <td data-bind='text: $data.loc_name'></td>
-          <td data-bind='text: $data.location'></td>
-          <td data-bind='text: $data.desc'></td>
-          <td>
-            <button data-bind='click: $parent.removeLoc'>Remove</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <main id='panel'>
+    <div class='center-map'> Map Center
+      <span>Lat: <input data-bind='value: center().lat' /></span>
+      <span data-bind: 'text: status'>Long: <input data-bind='value:center().lng' /></span>
+      <button class='btn btn-default' data-bind="click: changeCenter">Change Map Center</button>
+    </div>
 
-  </div>
+    <div class='filters'>
+      <form data-bind='submit: changeFilter'>
+        <select name='loc_type' data-bind='options: loc_types'></select>
+        Within
+        <select name='mileage' data-bind='options: mileage'></select> of Miles of Town
+        <button type='submit'>Change Filter</button>
+      </form>
+    </div>
 
-  <div class='map' id='map'>Map is loading</div>
+    <div class='addLoc'>
+      <form data-bind='submit: addLoc'>
+        <select name='loc_type' data-bind='options: loc_types'></select>
+        <input type='text' name='name' />
+        <input type='text' name='lat'>
+        <input type='text' name='long'>
+        <input type='text' name='desc'>
+        <button type='submit'>Add Location</button>
+      </form>
+    </div>
 
-  <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw&callback=initMap" async defer></script>
+    <div>
+      <p>ViewModel Status: <span data-bind="text: status">Status Loading</span></p>
+      <table>
+        <th>
+          Type
+        </th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Description</th>
+        <tbody data-bind='foreach: locations'>
+          <tr>
+            <td data-bind='text: $data.loc_type'></td>
+            <td data-bind='text: $data.loc_name'></td>
+            <td data-bind='text: $data.location'></td>
+            <td data-bind='text: $data.desc'></td>
+            <td>
+              <button data-bind='click: $parent.removeLoc'>Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div class='map' id='map'>Map is loading</div>
+  </main>
+
+
+  <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw"></script>
   <script type='text/javascript' src='app/map_model.js'></script>
   <script type='text/javascript' src='app/model.js'></script>
   <script type='text/javascript' src='app/main.js'></script>
+
+<script>
+  var slideout = new Slideout({
+    'panel': document.getElementById('panel'),
+    'menu': document.getElementById('menu'),
+    'padding': 256,
+    'tolerance': 70
+  });
+</script>
 </body>
 
 </html>

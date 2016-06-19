@@ -1,12 +1,3 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-#map {
-  height: 100%;
-}
-
 body {
   width: 100%;
   height: 100%;
@@ -26,8 +17,9 @@ body {
 }
 
 .slideout-panel {
-  position: relative;
+  position:relative;
   z-index: 1;
+  will-change: transform;
 }
 
 .slideout-open,
