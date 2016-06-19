@@ -3,6 +3,8 @@ var CENTER_COORD = {
   lng: -73.7866135
 };
 
+var map;
+
 function initMap() {
   console.log('Google Map Initiating');
 
@@ -15,7 +17,8 @@ function initMap() {
     mapTypeId: google.maps.MapTypeId.HYBRID
   };
 
-  var map = new google.maps.Map(mapDiv, mapOptions);
+   map = new google.maps.Map(mapDiv, mapOptions);
+
 
   var marker = new google.maps.Marker({
     position: CENTER_COORD,
@@ -24,3 +27,5 @@ function initMap() {
 
   marker.setMap(map);
 };
+
+// var map = initMap();
