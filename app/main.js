@@ -58,7 +58,7 @@ viewModel.prototype = {
     this.locations.push(new Location(arg));
   },
 
-  //TODO: how to set point to select the viewModel
+  //FIXME: how to set point to select the viewModel
   removeLoc: function(location) {
     console.log(this.locations);
     $(this).parent().locations.remove(location);
@@ -79,4 +79,5 @@ viewModel.prototype = {
 
 
 appViewModel = new viewModel(data)
+appViewModel.init();
 ko.applyBindings(appViewModel);

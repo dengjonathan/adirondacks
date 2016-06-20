@@ -6,33 +6,42 @@
   <script type='text/javascript' src='bower_components/knockout/dist/knockout.js'></script>
   <script type='text/javascript' src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
   <script type='text/javascript' src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
-  <link type='text/css' rel='stylesheet' href='styles/styles.css' />
   <script type='text/javascript' src="bower_components/slideout.js/dist/slideout.min.js"></script>
+  <script type='text/javascript' src="bower_components/oauth-signature/dist/oauth-signature.js"></script>
+  <script type='text/javascript' src="bower_components/urijs/src/URI.js"></script>
+  <script type='text/javascript' src="bower_components/crypto-js/crypto-js.js"></script>
+  <link type='text/css' rel='stylesheet' href='styles/styles.css' />
 </head>
 
 <body>
 
   <nav id="menu">
     <header>
-      <h2>Menu</h2>
+      <h2>Options</h2>
     </header>
-  </nav>
 
-  <main id='panel'>
     <div class='center-map'> Map Center
+      </br>
       <span>Lat: <input data-bind='value: center().lat' /></span>
       <span data-bind: 'text: status'>Long: <input data-bind='value:center().lng' /></span>
       <button class='btn btn-default' data-bind="click: changeCenter">Change Map Center</button>
     </div>
 
-    <div class='filters'>
-      <form data-bind='submit: changeFilter'>
-        <select name='loc_type' data-bind='options: loc_types'></select>
-        Within
-        <select name='mileage' data-bind='options: mileage'></select> of Miles of Town
-        <button type='submit'>Change Filter</button>
-      </form>
+  </nav>
+
+  <main id='panel'>
+    <button id='slideout' class='btn btn-primary'>Option Menu</button>
+    <div class='navbar'>
+      <div class='filters'>
+        <form data-bind='submit: changeFilter'>
+          <select name='loc_type' data-bind='options: loc_types'></select>
+          Within
+          <select name='mileage' data-bind='options: mileage'></select> of Miles of Town
+          <button type='submit'>Change Filter</button>
+        </form>
+      </div>
     </div>
+
 
     <div class='addLoc'>
       <form data-bind='submit: addLoc'>
@@ -68,7 +77,7 @@
       </table>
 
     </div>
-    <div class='map' id='map'>Map is loading</div>
+
   </main>
 
 
@@ -76,15 +85,8 @@
   <script type='text/javascript' src='app/map_model.js'></script>
   <script type='text/javascript' src='app/model.js'></script>
   <script type='text/javascript' src='app/main.js'></script>
-
-<script>
-  var slideout = new Slideout({
-    'panel': document.getElementById('panel'),
-    'menu': document.getElementById('menu'),
-    'padding': 256,
-    'tolerance': 70
-  });
-</script>
+  <script type='text/javascript' src="app/animations.js"></script>
+  <script type='text/javascript' src="app/yelp_api.js"></script>
 </body>
 
 </html>

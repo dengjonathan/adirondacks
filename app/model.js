@@ -39,27 +39,7 @@ Location.prototype = {
   }
 }
 
-// Google Map marker constructor
-var Marker = function(name, lat, lng, loc_type) {
-  var new_mark = new google.maps.Marker({
-    name: name,
-    position: {
-      lat: lat,
-      lng: lng
-    }
-  });
-  new_mark.addListener('click', toggleBounce); //TODO; add some useful feature for listeners
-  return new_mark;
-};
 
-// google place holder funciton to add bounce
-function toggleBounce(marker) {
-  if (marker.getAnimation() !== null) {
-    marker.setAnimation(null);
-  } else {
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-  }
-}
 
 // location child objects
 // var Climb = function(arg) {
