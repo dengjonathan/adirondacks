@@ -15,6 +15,7 @@ var viewModel = function(data) {
       return new Location(e);
     })
   );
+  this.yelp_results = {};
   this.markers = ko.computed(function() {
     var markers = [];
     ko.utils.arrayForEach(this.locations(),

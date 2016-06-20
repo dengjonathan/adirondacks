@@ -1,5 +1,5 @@
 //var yelp_request: 'http: //api.yelp.com/v2/search?&oauth_consumer_key=SOMEKEYHERE&oauth_token=SOMETOKENHERE&oauth_nonce=192824960453&oauth_timestamp=1432097803&oauth_signature_method=HMAC-SHA1&oauth_version=1.0&callback=cb&location=1032+Castro+Street%2C+Mou ntain+View&term=cafe&cll=37.385083%2C-122.08460200000002&oauth_signature=OURENCODEDSIGNATURE';
-var yelp_url = 'https://api.yelp.com/v2/search?';
+var yelp_url = 'https://api.yelp.com/v2/search?', yelp_results;
 
 // generate nonce key
 function nonce_generate() {
@@ -38,8 +38,7 @@ var settings = {
   dataType: 'jsonp',
   success: function(results) {
     console.log('Success yelp AJAX call!');
-    // Do stuff with results
-
+    appViewModel.yelp_results = ko.observableArray(results.businesses);
   },
   fail: function() {
     // Do stuff on fail

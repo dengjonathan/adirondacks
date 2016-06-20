@@ -21,20 +21,28 @@ function initMap() {
   map = new google.maps.Map(mapDiv, mapOptions);
 
   // event listeners
-  $(window).resize(function(){
+  $(window).resize(function() {
     google.maps.event.trigger(map, 'resize');
   });
 
 };
 
-var icons = {climb: 'images/climb.jpeg', food: 'images/food.png',
-              gear: 'images/gear.jpeg', camp: 'images/camp.jpeg'}
+var icons = {
+  climb: 'images/gear.jpeg',
+  food: 'images/food.png',
+  gear: 'images/gear.jpeg',
+  camp: 'images/camp.jpeg'
+}
+
+// TODO: make custom info window for every maker
+var infowindow = new google.maps.InfoWindow({
+  content: 'contentString'
+});
 
 // Google Map marker constructor
 var Marker = function(name, lat, lng, loc_type) {
   // FIXME: how to constructor to select correct icon?
   var icon = icons[loc_type];
-  console.log(icons[loc_type]);
   var new_mark = new google.maps.Marker({
     name: name,
     position: {
@@ -44,17 +52,13 @@ var Marker = function(name, lat, lng, loc_type) {
     animation: google.maps.Animation.DROP,
     icon: icon,
   });
-  new_mark.addListener('click', toggleBounce); //TODO; add some useful feature for listeners
+  // new_mark.addListener('click', toggleBounce); //TODO; add some useful feature for listeners
+  new_mark.addListener('click', function() {
+    infowindow.open(map, new_mark);
+  });
   return new_mark;
 };
 
-// google place holder funciton to add bounce
-function toggleBounce(marker) {
-  if (marker.getAnimation() !== null) {
-    marker.setAnimation(null);
-  } else {
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-  }
-}
+
 // // snippet to take markers off map
 // marker.setMap(null);
