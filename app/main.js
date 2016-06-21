@@ -1,33 +1,23 @@
-var viewModel = function(data) {
+// viewModel constructor
+var viewModel = function() {
   var self = this;
   this.status = ko.observable('active');
-  this.map = map;
   this.center = ko.observable({
-    // FIXME: get these to display on view and allow them to be changed
-    'lat': 44.1899178,
-    'lng': -73.7866135
+    lat: 44.1899178,
+    lng: -73.7866135
   });
-  this.filter = undefined;
-  this.loc_types = ko.observableArray(['all', 'climb', 'food', 'bivy', 'run']);
+  this.mapDiv = document.getElementById('map');
+  this.map = new Map(this.mapDiv, this.center());
+  this.filter = {
+    types: ['climb', 'food', 'bivy', 'run'],
+    selected: false
+  };
+  this.loc_types = ko.observableArray(['climb', 'food', 'bivy', 'run']);
   this.mileage = ko.observableArray([100, 50, 10, 5, 1]);
-  this.locations = ko.observableArray(
-    data.map(function(e) {
-      return new Location(e);
-    })
-  );
-  this.yelp_results = {};
-  this.markers = ko.computed(function() {
-    var markers = [];
-    ko.utils.arrayForEach(this.locations(),
-      function(each) {
-        markers.push(new Marker(each.name(), each.lat(), each.lng(), each.loc_type()));
-      });
-    return markers;
-  }, this);
-
+  this.locations = ko.observableArray([]);
 };
 
-//viewmodel functions
+//viewmodel methods
 viewModel.prototype = {
   // change the locations shown by location type and mileage
   changeFilter: function(request) {
@@ -37,10 +27,9 @@ viewModel.prototype = {
       mileage: $(request.mileage).val()
     };
     this.filter = filter;
-    console.log(this);
   },
 
-  changeCenter: function(request){
+  changeCenter: function(request) {
     this.center = {
       loc_type: $(request.lat).val(),
       name: $(request.lng).val(),
@@ -56,29 +45,43 @@ viewModel.prototype = {
       long: $(request.long).val(),
       desc: $(request.desc).val(),
     };
-    this.locations.push(new Location(arg));
+    this.locations().push(new Location(arg));
   },
 
   //FIXME: how to set point to select the viewModel
   removeLoc: function(location) {
-    console.log(this.locations);
     $(this).parent().locations.remove(location);
   },
 
-  // adds all markers to google map
+  // adds all markers to google 71
   addMarkers: function() {
-    this.markers().forEach(function(marker) {
-      marker.setMap(this.map);
+    this.locations().forEach(function(location) {
+      location.marker.setMap(this.map);
     })
   },
-  // initializies ViewModel with map
+
+  loadData: function() {
+    // load all initial climbing locations
+    var self = this;
+    data.forEach(function(e) {
+      self.locations().push(new Location(e));
+    });
+  },
+
+  loadYelp: function() {
+    yelp_results.forEach(function(e){
+      this.locations.push(new Location(e));
+    });
+  },
+  // initializies ViewModel with map and adds markers
   init: function() {
-    initMap();
+    this.loadData();
+    this.loadYelp();
     this.addMarkers();
   }
 };
 
-
+// And the monster is alive!
 appViewModel = new viewModel(data)
 appViewModel.init();
 ko.applyBindings(appViewModel);

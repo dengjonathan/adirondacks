@@ -5,10 +5,12 @@ var slideout = new Slideout({
   'tolerance': 70
 });
 
+
+//slideout panel
 $(document).ready(function() {
-  // slideout.open();
+  // slideout.open();  
+  //clicking option button will slide out toggle menu
   $('button#slideout').click(function() {
-    console.log(this);
     slideout.toggle();
   })
 });

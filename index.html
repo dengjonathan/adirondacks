@@ -74,19 +74,37 @@
             </td>
           </tr>
         </tbody>
+
       </table>
 
+      <table>
+        <th>
+          Type
+        </th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Description</th>
+        <tbody data-bind='foreach: yelp_results'>
+          <tr>
+            <td data-bind='text: $data.id'></td>
+            <td data-bind='text: $data.img_url'></td>
+            <td data-bind='text: $data.display_phone'></td>
+            <td>
+              <button data-bind='click: $parent.removeLoc'>Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
+    <div id='map'>Map Loading</div>
   </main>
 
 
   <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw"></script>
-  <script type='text/javascript' src='app/map_model.js'></script>
-  <script type='text/javascript' src='app/model.js'></script>
+  <script type='text/javascript' src="app/yelp_api.js"></script>
+  <script type='text/javascript' src='app/models.js'></script>
   <script type='text/javascript' src='app/main.js'></script>
   <script type='text/javascript' src="app/animations.js"></script>
-  <script type='text/javascript' src="app/yelp_api.js"></script>
 </body>
 
 </html>
