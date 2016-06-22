@@ -2,12 +2,12 @@
 var viewModel = function() {
   var self = this;
   this.status = ko.observable('active');
-  this.center = ko.observable({
+  self.center = ko.observable({
     lat: 44.1899178,
     lng: -73.7866135
   });
-  this.mapDiv = document.getElementById('map');
-  this.map = new Map(this.mapDiv, this.center());
+  self.mapDiv = document.getElementById('map');
+  this.map = {};
   this.filter = {
     types: ['climb', 'food', 'bivy', 'run'],
     selected: false
@@ -15,6 +15,7 @@ var viewModel = function() {
   this.loc_types = ko.observableArray(['climb', 'food', 'bivy', 'run']);
   this.mileage = ko.observableArray([100, 50, 10, 5, 1]);
   this.locations = ko.observableArray([]);
+  this.yelp_results = [];
 };
 
 //viewmodel methods
@@ -53,10 +54,16 @@ viewModel.prototype = {
     $(this).parent().locations.remove(location);
   },
 
+  initMap: function() {
+    var self = this;
+    self.map = new Map(self.mapDiv, self.center());
+  },
+
   // adds all markers to google 71
   addMarkers: function() {
+    var self = this;
     this.locations().forEach(function(location) {
-      location.marker.setMap(this.map);
+      location.marker.setMap(self.map);
     })
   },
 
@@ -69,14 +76,34 @@ viewModel.prototype = {
   },
 
   loadYelp: function() {
-    yelp_results.forEach(function(e){
-      this.locations.push(new Location(e));
+    var self = this;
+    //external function to access yelp API
+    getYelp();
+    this.yelp_results.forEach(function(e) {
+      var arg = {
+        name: e.name,
+        position: {
+          lat: e.location.coordinate.latitude,
+          lng: e.location.coordinate.longitude
+        },
+        desc: e.snippet_text,
+        loc_type: 'food',
+        phone: e.display_phone,
+        image_url: e.image_url,
+        mobile_url: e.mobile_url,
+        rating: e.rating,
+      };
+      console.log(self);
+      console.log(arg);
+      self.locations().push(new Location(arg));
     });
   },
   // initializies ViewModel with map and adds markers
   init: function() {
     this.loadData();
+    // FIXME: why does this work when explicity called, but not when init?
     this.loadYelp();
+    this.initMap();
     this.addMarkers();
   }
 };

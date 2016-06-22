@@ -27,6 +27,8 @@ var data = [{
 /* Location class - creates a location object including marker and relevant
 information */
 var Location = function(arg) {
+  console.log(arg.position.lat);
+  console.log(arg.position.lng);
   var self = this;
   this.name = ko.observable(arg.name);
   this.position = {
@@ -40,7 +42,6 @@ var Location = function(arg) {
   this.loc_type = ko.observable(arg.loc_type);
 
   // creates google map marker
-  console.log('###', this.position.lat())
   this.marker = new Marker(this.name(), this.position, this.loc_type());
   this.infowindow = new google.maps.InfoWindow({
     content: this.desc()
@@ -52,14 +53,10 @@ var Location = function(arg) {
   });
 
   //additional data from yelp
-  this.data = {
-    phone: arg.phone,
-    image_url: arg.image_url,
-    mobile_url: arg.mobile_url,
-    rating: arg.rating,
-    snippet_text: arg.snippet_text
-  };
-
+  this.phone = ko.observable(arg.phone);
+  this.image_url = ko.observable(arg.image_url);
+  this.mobile_url = ko.observable(arg.mobile_url);
+  this.rating = ko.observable(arg.rating);
 };
 
 Location.prototype = {
@@ -73,8 +70,6 @@ Location.prototype = {
 var Map = function(mapDiv, center_pos, options) {
   // TODO: refactor to have viewModel pass in args for constructor
   console.log('Google Map Initiating');
-  console.log(mapDiv);
-  console.log(center_pos);
   var mapOptions = options || {
     center: center_pos,
     zoom: 12,
@@ -95,7 +90,6 @@ var LOC_ICONS = {
 // Google Map marker constructor
 var Marker = function(name, position, loc_type) {
   var icon = LOC_ICONS[loc_type];
-  console.log(position.lat());
   return new google.maps.Marker({
     name: name,
     position: {

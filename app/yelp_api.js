@@ -1,7 +1,7 @@
 /* This script accesses Yelp API and saves information to the variable yelp results*/
 var yelp_results;
 
-function getYelp() {
+function getYelp(){
   var yelp_API = {
     yelp_url: 'https://api.yelp.com/v2/search?',
     // TODO: find way to access this info without openly displaying
@@ -38,21 +38,23 @@ function getYelp() {
     'GET',
     yelp_API.yelp_url,
     parameters,
-    consumerSecret,
-    tokenSecret, {
+    yelp_API.consumerSecret,
+    yelp_API.tokenSecret,
+    {
       encodeSignature: false
     });
 
   parameters.oauth_signature = encodedSignature;
 
   var yelp_settings = {
-    url: yelp_url,
+    url: yelp_API.yelp_url,
     data: parameters,
     cache: true, // This is crucial to include as well to prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
     dataType: 'jsonp',
     success: function(results) {
       console.log('Success yelp AJAX call!');
-      yelp_results = results.businesses;
+      // FIXME do you want only businesses?
+      appViewModel.yelp_results = results.businesses;
     },
     fail: function() {
       // Do stuff on fail
@@ -63,5 +65,3 @@ function getYelp() {
   // Send AJAX query via jQuery library.
   return $.ajax(yelp_settings);
 };
-
-getYelp();
