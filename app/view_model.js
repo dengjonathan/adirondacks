@@ -19,6 +19,7 @@ var viewModel = function() {
   this.climbs = [];
   this.yelp_results = [];
   this.locations = ko.observableArray([]);
+  this.openInfoWindow = '';
 };
 
 //viewmodel methods
@@ -77,6 +78,13 @@ viewModel.prototype = {
     this.locations().forEach(function(location) {
       location.marker.setMap(self.map);
     })
+  },
+
+  openInfoWindow: function(){
+    console.log(self);
+    consoel.log(this);
+    self.openInfoWindow.close();
+    this.infowindow.open(map, self.marker);
   },
 
   loadData: function() {

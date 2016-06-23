@@ -24,6 +24,7 @@ var data = [{
   desc: 'A great WI2+ in the winter.  Sketchy though.'
 }];
 
+var openInfoWindow;
 /* Location class - creates a location object including marker and relevant
 information */
 var Location = function(arg) {
@@ -58,7 +59,12 @@ var Location = function(arg) {
 
   // when marker is clicked will open up info window
   this.marker.addListener('click', function() {
-    console.log(this.infowindow);
+    // FIXME: how to select an object oriented way
+    var view_model = appViewModel
+    if (view_model.openInfoWindow){
+      view_model.openInfoWindow.close();
+    };
+    view_model.openInfoWindow = self.infowindow;
     self.infowindow.open(map, self.marker);
   });
 };
