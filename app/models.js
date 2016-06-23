@@ -27,8 +27,6 @@ var data = [{
 /* Location class - creates a location object including marker and relevant
 information */
 var Location = function(arg) {
-  console.log(arg.position.lat);
-  console.log(arg.position.lng);
   var self = this;
   this.name = ko.observable(arg.name);
   this.position = {
@@ -41,22 +39,28 @@ var Location = function(arg) {
   this.desc = ko.observable(arg.desc);
   this.loc_type = ko.observable(arg.loc_type);
 
-  // creates google map marker
-  this.marker = new Marker(this.name(), this.position, this.loc_type());
-  this.infowindow = new google.maps.InfoWindow({
-    content: this.desc()
-  });
-
-  // when marker is clicked will open up info window
-  this.marker.addListener('click', function() {
-    this.infowindow.open(map, new_mark);
-  });
-
   //additional data from yelp
   this.phone = ko.observable(arg.phone);
   this.image_url = ko.observable(arg.image_url);
   this.mobile_url = ko.observable(arg.mobile_url);
   this.rating = ko.observable(arg.rating);
+
+  // creates google map marker
+  this.marker = new Marker(this.name(), this.position, this.loc_type());
+  var content = '<h2><a href="' + this.mobile_url() + '">' + this.name() + '</a></h2>'
+  content += '<p>' + this.desc() + '</p>'
+  content += '<p>Phone: ' + this.phone() + '</p>'
+  content += '<p>Yelp Rating: ' + this.rating() + '</p>'
+  content += '<img src="' + this.image_url() + '">'
+  this.infowindow = new google.maps.InfoWindow({
+    content: content
+  });
+
+  // when marker is clicked will open up info window
+  this.marker.addListener('click', function() {
+    console.log(this.infowindow);
+    self.infowindow.open(map, self.marker);
+  });
 };
 
 Location.prototype = {
@@ -69,11 +73,9 @@ Location.prototype = {
 // Google Map object constructor
 var Map = function(mapDiv, center_pos, options) {
   // TODO: refactor to have viewModel pass in args for constructor
-  console.log('Google Map Initiating');
   var mapOptions = options || {
     center: center_pos,
     zoom: 12,
-    draggable: true,
     mapTypeId: google.maps.MapTypeId.HYBRID
   };
   return new google.maps.Map(mapDiv, mapOptions);
@@ -81,10 +83,10 @@ var Map = function(mapDiv, center_pos, options) {
 
 // Reference to marker icons
 var LOC_ICONS = {
-  climb: 'images/gear.jpeg',
+  climb: 'images/gear.gif',
   food: 'images/food.png',
-  gear: 'images/gear.jpeg',
-  camp: 'images/camp.jpeg'
+  gear: 'images/gear.gif',
+  camp: 'images/camp.gif'
 };
 
 // Google Map marker constructor

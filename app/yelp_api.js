@@ -1,7 +1,6 @@
 /* This script accesses Yelp API and saves information to the variable yelp results*/
-var yelp_results;
-
-function getYelp(){
+viewModel.prototype.getYelp  = function() {
+  var self= this;
   var yelp_API = {
     yelp_url: 'https://api.yelp.com/v2/search?',
     // TODO: find way to access this info without openly displaying
@@ -39,8 +38,7 @@ function getYelp(){
     yelp_API.yelp_url,
     parameters,
     yelp_API.consumerSecret,
-    yelp_API.tokenSecret,
-    {
+    yelp_API.tokenSecret, {
       encodeSignature: false
     });
 
@@ -53,15 +51,16 @@ function getYelp(){
     dataType: 'jsonp',
     success: function(results) {
       console.log('Success yelp AJAX call!');
-      // FIXME do you want only businesses?
-      appViewModel.yelp_results = results.businesses;
+      results.businesses.forEach(function(each) {
+        self.yelp_results.push(each)
+      });
+      self.loadYelp();
+      self.addMarkers();
     },
     fail: function() {
       // Do stuff on fail
       console.log('error during Yelp AJAX call');
     }
   };
-
-  // Send AJAX query via jQuery library.
-  return $.ajax(yelp_settings);
+  return $.ajax(yelp_settings).promise();
 };
