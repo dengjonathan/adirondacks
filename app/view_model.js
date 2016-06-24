@@ -9,20 +9,20 @@ var viewModel = function() {
   });
   self.mapDiv = document.getElementById('map');
   this.map = {};
-  this.filter = {
+  this.filters = {
     types: ['climb', 'food', 'bivy', 'run'],
     selected: false
   };
   this.loc_types = ko.observableArray(['climb', 'food', 'bivy', 'run']);
   this.mileage = ko.observableArray([100, 50, 10, 5, 1]);
-  // TODO: make a computed array that combines these two arrays?
-  this.climbs = [];
   this.yelp_results = [];
   this.locations = ko.observableArray([]);
+  this.trip = ko.observableArray([]);
   this.openInfoWindow = '';
 };
 
 //viewmodel methods
+
 viewModel.prototype = {
   // change the locations shown by location type and mileage
   changeFilter: function(request) {
@@ -34,36 +34,12 @@ viewModel.prototype = {
     this.filter = filter;
   },
 
-  changeCenter: function(request) {
-    this.center = {
-      loc_type: $(request.lat).val(),
-      name: $(request.lng).val(),
-    };
-  },
-
-  // add location to view model
-  addLoc: function(request) {
-    var arg = {
-      loc_type: $(request.loc_type).val(),
-      name: $(request.name).val(),
-      lat: $(request.lat).val(),
-      long: $(request.long).val(),
-      desc: $(request.desc).val(),
-    };
-    this.locations().push(new Location(arg));
-  },
-
-  //FIXME: how to set point to select the viewModel
-  removeLoc: function(location) {
-    $(this).parent().locations.remove(location);
-  },
-
   initMap: function() {
     var self = this;
     self.map = new Map(self.mapDiv, self.center());
   },
 
-  changeCenter: function(arg){
+  changeCenter: function(arg) {
     this.center = ko.observable({
       lat: parseInt($(arg.lat).val()),
       lng: parseInt($(arg.lng).val())
@@ -80,12 +56,12 @@ viewModel.prototype = {
     })
   },
 
-  openInfoWindow: function(){
-    console.log(self);
-    consoel.log(this);
-    self.openInfoWindow.close();
-    this.infowindow.open(map, self.marker);
-  },
+  // openInfoWindow: function(){
+  //   console.log(self);
+  //   consoel.log(this);
+  //   self.openInfoWindow.close();
+  //   this.infowindow.open(map, self.marker);
+  // },
 
   loadData: function() {
     // load all initial climbing locations
@@ -114,6 +90,16 @@ viewModel.prototype = {
       };
       self.locations().push(new Location(arg));
     });
+  },
+
+  // adds location to trip planning array
+  addTrip: function(new_loc) {
+    console.log('added')
+    this.trip.push(new_loc)
+  },
+
+  removeTrip: function(loc){
+    this
   },
   // initializies ViewModel with map and adds markers
   init: function() {

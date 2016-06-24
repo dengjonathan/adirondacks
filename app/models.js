@@ -53,13 +53,14 @@ var Location = function(arg) {
   content += '<p>Phone: ' + this.phone() + '</p>'
   content += '<p>Yelp Rating: ' + this.rating() + '</p>'
   content += '<img src="' + this.image_url() + '">'
+  content += '<button data-bind="click: $root.addTrip">Add to Trip</button>'
   this.infowindow = new google.maps.InfoWindow({
     content: content
   });
 
   // when marker is clicked will open up info window
   this.marker.addListener('click', function() {
-    // FIXME: how to select an object oriented way
+    // FIXME: how to select an object oriented way currently stored in global var
     var view_model = appViewModel
     if (view_model.openInfoWindow){
       view_model.openInfoWindow.close();
@@ -89,7 +90,7 @@ var Map = function(mapDiv, center_pos, options) {
 
 // Reference to marker icons
 var LOC_ICONS = {
-  climb: 'images/gear.gif',
+  climb: 'images/climb.gif',
   food: 'images/food.png',
   gear: 'images/gear.gif',
   camp: 'images/camp.gif'
