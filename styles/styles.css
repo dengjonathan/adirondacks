@@ -5,13 +5,32 @@ html, body {
 }
 
 #map {
-  width: 600px;
-  height: 600px;
+  width: available;
+  height: 1000px;
 }
 
 body {
   width: 100%;
   height: 100%;
+}
+
+nav{
+  background-color:#b3cccc;
+  box-shadow: 10px 10px 5px #888888;
+}
+
+main {
+  background-color:  #6F90A2;
+}
+
+.locations{
+  overflow-y: auto;
+  height: 600px;
+}
+
+.navbar{
+  position: fixed;
+  top: 0px;
 }
 
 .slideout-menu {
@@ -40,4 +59,9 @@ body {
 
 .slideout-open .slideout-menu {
   display: block;
+}
+
+.menu-hamburger {
+  font-size: 40px;
+  font-weight: bolder;
 }

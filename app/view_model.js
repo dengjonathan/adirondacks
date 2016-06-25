@@ -94,17 +94,18 @@ viewModel.prototype = {
 
   // adds location to trip planning array
   addTrip: function(new_loc) {
-    console.log('added')
+    console.log('location added to trip')
     this.trip.push(new_loc)
   },
 
   removeTrip: function(loc){
-    this
+    console.log('location removed from trip');
+    this.trip.remove(loc)
   },
   // initializies ViewModel with map and adds markers
   init: function() {
     this.loadData();
-    this.initMap();
     this.getYelp();
+    this.initMap();
   }
 };

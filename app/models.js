@@ -28,87 +28,87 @@ var openInfoWindow;
 /* Location class - creates a location object including marker and relevant
 information */
 var Location = function(arg) {
-  var self = this;
-  this.name = ko.observable(arg.name);
-  this.position = {
-    lat: ko.observable(arg.position.lat),
-    lng: ko.observable(arg.position.lng)
-  };
-  this.location = ko.computed(function() {
-    return self.position.lat() + ", " + self.position.lng();
-  });
-  this.desc = ko.observable(arg.desc);
-  this.loc_type = ko.observable(arg.loc_type);
-
-  //additional data from yelp
-  this.phone = ko.observable(arg.phone);
-  this.image_url = ko.observable(arg.image_url);
-  this.mobile_url = ko.observable(arg.mobile_url);
-  this.rating = ko.observable(arg.rating);
-
-  // creates google map marker
-  this.marker = new Marker(this.name(), this.position, this.loc_type());
-  var content = '<h2><a href="' + this.mobile_url() + '">' + this.name() + '</a></h2>'
-  content += '<p>' + this.desc() + '</p>'
-  content += '<p>Phone: ' + this.phone() + '</p>'
-  content += '<p>Yelp Rating: ' + this.rating() + '</p>'
-  content += '<img src="' + this.image_url() + '">'
-  content += '<button data-bind="click: $root.addTrip">Add to Trip</button>'
-  this.infowindow = new google.maps.InfoWindow({
-    content: content
-  });
-
-  // when marker is clicked will open up info window
-  this.marker.addListener('click', function() {
-    // FIXME: how to select an object oriented way currently stored in global var
-    var view_model = appViewModel
-    if (view_model.openInfoWindow){
-      view_model.openInfoWindow.close();
+    var self = this;
+    this.name = ko.observable(arg.name);
+    this.position = {
+      lat: ko.observable(arg.position.lat),
+      lng: ko.observable(arg.position.lng)
     };
-    view_model.openInfoWindow = self.infowindow;
-    self.infowindow.open(map, self.marker);
-  });
-};
+    this.location = ko.computed(function() {
+      return self.position.lat() + ", " + self.position.lng();
+    });
+    this.desc = ko.observable(arg.desc);
+    this.loc_type = ko.observable(arg.loc_type);
 
-Location.prototype = {
-  changeName: function(name) {
-    this.loc_name = name;
-  },
-};
+    //additional data from yelp
+    this.phone = ko.observable(arg.phone);
+    this.image_url = ko.observable(arg.image_url);
+    this.mobile_url = ko.observable(arg.mobile_url);
+    this.rating = ko.observable(arg.rating);
+
+    // creates google map marker
+    this.marker = new Marker(this.name(), this.position, this.loc_type());
+    // hard code the contents of the infowindow
+    var content = '<h2><a href="' + this.mobile_url() + '">' + this.name() + '</a></h2>';
+    content += '<p>' + this.desc() + '</p>';
+    content += '<p>Phone: ' + this.phone() + '</p>';
+    content += '<p data-bind="text: status">Yelp Rating: ' + this.rating() + '</p>';
+    content += '<img src="' + this.image_url() + '">';
+    content += '<button data-bind="click: function(){console.log(\'hello\')}">Add to Trip</button>';
+    // var content = '<div id="infowindow" data-bind="template: {name: infowindow-template}"></div'
+    this.infowindow = new google.maps.InfoWindow();
+    this.infowindow.setContent($('div#infowindow-template').html())
+      // when marker is clicked will open up info window
+      this.marker.addListener('click', function() {
+        // FIXME: how to select an object oriented way currently stored in global var
+        var view_model = appViewModel
+        if (view_model.openInfoWindow) {
+          view_model.openInfoWindow.close();
+        };
+        view_model.openInfoWindow = self.infowindow;
+        self.infowindow.open(map, self.marker);
+      });
+    };
+
+    Location.prototype = {
+      changeName: function(name) {
+        this.loc_name = name;
+      },
+    };
 
 
-// Google Map object constructor
-var Map = function(mapDiv, center_pos, options) {
-  // TODO: refactor to have viewModel pass in args for constructor
-  var mapOptions = options || {
-    center: center_pos,
-    zoom: 12,
-    mapTypeId: google.maps.MapTypeId.HYBRID
-  };
-  return new google.maps.Map(mapDiv, mapOptions);
-};
+    // Google Map object constructor
+    var Map = function(mapDiv, center_pos, options) {
+      // TODO: refactor to have viewModel pass in args for constructor
+      var mapOptions = options || {
+        center: center_pos,
+        zoom: 12,
+        mapTypeId: google.maps.MapTypeId.HYBRID
+      };
+      return new google.maps.Map(mapDiv, mapOptions);
+    };
 
-// Reference to marker icons
-var LOC_ICONS = {
-  climb: 'images/climb.gif',
-  food: 'images/food.png',
-  gear: 'images/gear.gif',
-  camp: 'images/camp.gif'
-};
+    // Reference to marker icons
+    var LOC_ICONS = {
+      climb: 'images/climb.gif',
+      food: 'images/food.png',
+      gear: 'images/gear.gif',
+      camp: 'images/camp.gif'
+    };
 
-// Google Map marker constructor
-var Marker = function(name, position, loc_type) {
-  var icon = LOC_ICONS[loc_type];
-  return new google.maps.Marker({
-    name: name,
-    position: {
-      lat: position.lat(),
-      lng: position.lng()
-    },
-    animation: google.maps.Animation.DROP,
-    icon: icon,
-  });
-};
+    // Google Map marker constructor
+    var Marker = function(name, position, loc_type) {
+      var icon = LOC_ICONS[loc_type];
+      return new google.maps.Marker({
+        name: name,
+        position: {
+          lat: position.lat(),
+          lng: position.lng()
+        },
+        animation: google.maps.Animation.DROP,
+        icon: icon,
+      });
+    };
 
-// // snippet to take markers off map
-// marker.setMap(null);
+    // // snippet to take markers off map
+    // marker.setMap(null);
