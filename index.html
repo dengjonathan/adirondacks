@@ -39,14 +39,29 @@
 
     <div class='filters'>
       <form data-bind='submit: changeFilter'>
-        <select name='loc_type' data-bind='options: loc_types'></select>
-        Within
-        <select name='mileage' data-bind='options: mileage'></select> of Miles of Town
-        <button type='submit'>Change Filter</button>
+        <p>Location Type</p>
+        <label class="btn btn-primary">
+            <input type="checkbox" name='climb' checked/>
+        Climb
+        </label>
+        <label class="btn btn-primary">
+            <input type="checkbox" name="food" checked/>
+        Food
+        </label>
+        <label class="btn btn-primary">
+            <input type="text" name='keyword' />
+        Search Term
+        </label>
+        <p>Search Term</p>
+        <button class='btn btn-primary' type='submit'>Change Filter</button>
       </form>
     </div>
 
     <div class='locations'>
+      <p>
+        Locations
+      </p>
+      <p data-bind='$root.locations().length'></p>
       <table>
         <th>
           Type
@@ -56,12 +71,35 @@
         <th>Description</th>
         <tbody data-bind='foreach: locations'>
           <tr>
-            <td data-bind='text: $data.loc_type'></td>
+            <td data-bind='text: $data'></td>
+            <td data-bind='text: loc_type'></td>
+            <td data-bind='text: name'></td>
+            <td data-bind='text: location'></td>
+            <td data-bind='text: desc'></td>
+            <td>
+              <!-- <button data-bind='click: $parent.addTrip.bind($parent)'>Add to Trip</button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class='yelp'>
+      <table>
+        <th>
+          Type
+        </th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Description</th>
+        <tbody data-bind='foreach: yelp_results'>
+          <tr>
+            <!-- <img data-bind="attr: { href:}"></td> -->
             <td data-bind='text: $data.name'></td>
             <td data-bind='text: $data.location'></td>
             <td data-bind='text: $data.desc'></td>
             <td>
-             <button data-bind='click: $parent.addTrip.bind($parent)'>Add to Trip</button>
+              <button data-bind='click: $parent.addTrip.bind($parent)'>Add to Trip</button>
             </td>
           </tr>
         </tbody>
@@ -71,20 +109,15 @@
   </nav>
 
   <main id='panel'>
-
-    <button id='slideout' class='btn btn-info btn-small'><span class="menu-hamburger">&#9776;</span></button>
-
-    <!-- <div class='navbar'>
-      <div class='navbar-brand'>
-            Dacks Climber
-      </div>
-    </div> -->
-    <p data-bind='text: status'></p>
-    <div data-bind="template: {name: 'location-row', foreach: $root.locations}">
+    <div class='navbar'>
+      <button id='slideout' class='btn btn-info btn-small'><span class="menu-hamburger">&#9776;</span></button>
+    <div class='navbar-brand'>
+      <h3>Dacks Climber</h3>
     </div>
-
-    <div class='trip-plan'>
-      Add Locations to Your t
+    </div>
+    <p data-bind='text: $root.locations().length'></p>
+<div class='trip-plan'>
+  <h4>Plan Your Trip</h4>
       <table>
         <th>
           Type
@@ -92,7 +125,7 @@
         <th>Name</th>
         <th>Location</th>
         <th>Description</th>
-        <tbody data-bind= "template: {name: 'location-row', foreach: $root.trip}">
+        <tbody data-bind="template: {name: 'location-row', foreach: $root.trip}">
         </tbody>
       </table>
     </div>
@@ -103,42 +136,34 @@
     </div>
   </main>
 
-<div id='infowindow-template' data-bind='with: locations'>
-  <tr>
-    <td data-bind='text: $data'></td>
-    <td data-bind='text: $parent'></td>
-    <td data-bind='text: $data.desc'></td>
-    <td>
-      <button data-bind='click: function(){alert(\'hello\')}'>Remove from Trip</button>
-    </td>
-    <td>
-      Hello World!
-    </td>
-  </tr>
-</div>
+  <div id='infowindow-template' data-bind='with: selectedLocation'>
+    <p data-bind='text: name'></p>
+    <p data-bind='text: desc'></p>
+    <button data-bind='click: function(){console.log($data)}'>Add to Trip</button>
+    </tr>
+  </div>
 
-<!-- KO template -->
-<script type='text/html' id='location-row'>
-  <tr>
-    <td data-bind='text: $data.loc_type'></td>
-    <td data-bind='text: $data.loc_name'></td>
-    <td data-bind='text: $data.desc'></td>
+  <!-- KO template -->
+  <script type='text/html' id='location-row'>
+    <tr>
+      <td data-bind='text: $data.loc_type'></td>
+      <td data-bind='text: $data.name'></td>
+      <td data-bind='text: $data.desc'></td>
     <td>
-      <button data-bind='click: $parent.removeTrip.bind($parent)'>Remove from Trip</button>
-    </td>
-  </tr>
-</script>
+        <button data-bind='click: $parent.removeTrip.bind($parent)'>Remove from Trip</button>
+      </td>
+    </tr>
+  </script>
 
-<script type='text/html' id='infowindow-template'>
-  <p>
-    Hello world
-  </p>
-</script>
+  <script type='text/html' id='infowindow-template'>
+    <p>
+      Hello world
+    </p>
+  </script>
 
   <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw"></script>
   <script type='text/javascript' src='app/models.js'></script>
   <script type='text/javascript' src="app/view_model.js"></script>
-  <script type='text/javascript' src="app/yelp_api.js"></script>
   <script type='text/javascript' src='app/main.js'></script>
   <script type='text/javascript' src="app/animations.js"></script>
 </body>

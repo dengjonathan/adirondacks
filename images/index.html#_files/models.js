@@ -50,13 +50,14 @@ var Location = function(arg) {
     // creates google map marker
     this.marker = new Marker(this.name(), this.position, this.loc_type());
     // hard code the contents of the infowindow
-    var content = '<h2 data-bind="$data"><a href="' + this.mobile_url() + '">' + this.name() +'</a></h2>';
-    content += '<p>' + this.desc() + '</p>';
-    content += '<p>Phone: ' + this.phone() + '</p>';
-    content += '<p data-bind="text: status">Yelp Rating: ' + this.rating() + '</p>';
-    content += '<img src="' + this.image_url() + '">';
+    // var content = '<h2><a href="' + this.mobile_url() + '">' + this.name() + '</a></h2>';
+    // content += '<p>' + this.desc() + '</p>';
+    // content += '<p>Phone: ' + this.phone() + '</p>';
+    // content += '<p data-bind="text: status">Yelp Rating: ' + this.rating() + '</p>';
+    // content += '<img src="' + this.image_url() + '">';
+    // content += '<button data-bind="click: function(){console.log(\'hello\')}">Add to Trip</button>';
     this.infowindow = new google.maps.InfoWindow();
-    this.infowindow.setContent(content);
+    this.infowindow.setContent($('div#infowindow-template').html())
       // when marker is clicked will open up info window
       this.marker.addListener('click', function() {
         // FIXME: how to select an object oriented way currently stored in global var

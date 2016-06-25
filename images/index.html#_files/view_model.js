@@ -23,34 +23,16 @@ var viewModel = function() {
 
 //viewmodel methods
 viewModel.prototype = {
-    // change the locations shown by location type and mileage
-    changeFilter: function(request) {
-      var loc_types = [];
-      console.log($(request.climb).val());
-      console.log($(request.keyword).val())
-      if ($(request.climb).val() == 'on') {
-        //something
-      };
-      var filter = {
-        loc_type: $(request.loc_type).val(),
-        keyworkd: $(request.mileage).val()
-      };
-      this.filter = filter;
-    },
-
-    filterLocations: function() {
-      if (!this.filter) {
-        this.filterLocations = this.locations;
-      } else {
-        this.filterLocations = ko.utils.arrayFilter(this.locations(), function(item) {
-          return ko.utils.stringStartsWith(item.name().toLowerCase(), filter);
-        });
-      }
-    },
-    return ko.utils.arrayFilter(this.items(), function(item) {
-      return ko.utils.stringStartsWith(item.name().toLowerCase(), filter);
-    });
+  // change the locations shown by location type and mileage
+  changeFilter: function(request) {
+    console.log(request.loc_type);
+    var filter = {
+      loc_type: $(request.loc_type).val(),
+      mileage: $(request.mileage).val()
+    };
+    this.filter = filter;
   },
+
   initMap: function() {
     var self = this;
     self.map = new Map(self.mapDiv, self.center());
