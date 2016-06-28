@@ -2,116 +2,70 @@
 <html>
 
 <head>
-  <script type='text/javascript' src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script type='text/javascript' src='bower_components/knockout/dist/knockout.js'></script>
-  <script type='text/javascript' src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
-  <script type='text/javascript' src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
-  <script type='text/javascript' src="bower_components/slideout.js/dist/slideout.min.js"></script>
-  <script type='text/javascript' src="bower_components/oauth-signature/dist/oauth-signature.js"></script>
-  <script type='text/javascript' src="bower_components/urijs/src/URI.js"></script>
-  <script type='text/javascript' src="bower_components/crypto-js/crypto-js.js"></script>
-  <link type='text/css' rel='stylesheet' href='styles/styles.css' />
+    <script type='text/javascript' src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type='text/javascript' src='bower_components/knockout/dist/knockout.js'></script>
+    <script type='text/javascript' src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
+    <script type='text/javascript' src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
+    <script type='text/javascript' src="bower_components/slideout.js/dist/slideout.min.js"></script>
+    <script type='text/javascript' src="bower_components/oauth-signature/dist/oauth-signature.js"></script>
+    <script type='text/javascript' src="bower_components/urijs/src/URI.js"></script>
+    <script type='text/javascript' src="bower_components/crypto-js/crypto-js.js"></script>
+    <link type='text/css' rel='stylesheet' href='styles/styles.css' />
 </head>
 
 <body>
-  <!--slide out panel with options -->
-  <nav id="menu" class='slideout-menu slideout'>
+    <!--slide out panel with options -->
+    <nav id="menu" class='slideout-menu slideout'>
 
-    <div class='center-map'> Map Center
-      </br>
-      <form data-bind='submit: changeCenter'>
-        <table>
-          <tr>
-            <span>LAT: <input name='lat' data-bind='value: center().lat'/></span></br>
-          </tr>
-          <tr>
-            <span data-bind: 'text: status'>LNG: <input name='lng' data-bind='value:center().lng' /></span>
-          </tr>
-          <tr>
-            <button type="submit">Change Map Center</button>
-          </tr>
-        </table>
-      </form>
-    </div>
+        <div class='center-map'> Map Center
+            </br>
+            <form data-bind='submit: changeCenter'>
+                <table>
+                    <tr>
+                        <span>LAT: <input name='lat' data-bind='value: center().lat'/></span></br>
+                    </tr>
+                    <tr>
+                        <span data-bind: 'text: status'>LNG: <input name='lng' data-bind='value:center().lng' /></span>
+                    </tr>
+                    <tr>
+                        <button type="submit">Change Map Center</button>
+                    </tr>
+                </table>
+            </form>
+        </div>
 
-    <div class='filters'>
-      <form data-bind='submit: changeFilter'>
-        <p>Location Type</p>
-        <label class="btn btn-primary">
-            <input type="checkbox" name='climb' checked/>
-        Climb
-        </label>
-        <label class="btn btn-primary">
-            <input type="checkbox" name="food" checked/>
-        Food
-        </label>
-        <label class="btn btn-primary">
-            <input type="text" name='keyword' />
-        Search Term
-        </label>
-        <p>Search Term</p>
-        <button class='btn btn-primary' type='submit'>Change Filter</button>
-      </form>
-    </div>
+        <div>
+            <table>
+                <th>
+                    Search by Name
+                    <input placeholder="Enter keyword" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+                </th>
+                <tbody data-bind='foreach: filtered_locations'>
+                    <tr>
+                        <td data-bind='text: $data.name, click: $data.marker.animate()'></td>
+                        <!-- <td><button data-bind='click: $parent.addTrip($data)' class='btn btn-small'>Add to Trip</button></td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-  <div>
-    <table>
-    <th><input placeholder="Search…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off"></th>
-      <tbody data-bind='foreach: foods'>
-        <tr>
-          <td data-bind='text: $data.name'></td>
-          <!-- <td><button data-bind='click: $parent.addTrip($data)' class='btn btn-small'>Add to Trip</button></td> -->
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    </nav>
 
-  </nav>
+    <main id='panel'>
+        <div class='navbar'>
+            <button id='slideout' class='btn btn-info btn-small' data-bind='click: slideOut'><span class="menu-hamburger">&#9776;</span></button>
+            <div class='navbar-brand'>
+                <h3>Dacks Climber</h3>
+            </div>
+        </div>
+        <p>
+            Locations number
+        </p>
+        <p data-bind='text: $root.locations().length'></p>
 
-  <main id='panel'>
-    <div class='navbar'>
-      <button id='slideout' class='btn btn-info btn-small' data-bind ='click: slideOut'><span class="menu-hamburger">&#9776;</span></button>
-    <div class='navbar-brand'>
-      <h3>Dacks Climber</h3>
-    </div>
-    </div>
-    <p>
-      Locations number
-    </p>
-    <p data-bind='text: $root.locations().length'></p>
+        <div id='map'>Map Loading</div>
 
-    <div>
-      <table>
-        <tbody data-bind='foreach: trip'>
-          <tr>
-            <td data-bind='text: $data.name'></td>
-            <!-- <td><button data-bind='click: $parent.removeTrip($data)' class='btn btn-small'>Remove Trip</button></td> -->
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div id='map'>Map Loading</div>
-
-  <!-- KO template -->
-  <script type='text/html' id='location-row'>
-    <tr>
-      <td data-bind='text: $data.loc_type'></td>
-      <td data-bind='text: $data.name'></td>
-      <td data-bind='text: $data.desc'></td>
-    <td>
-        <button data-bind='click: $parent.removeTrip.bind($parent)'>Remove from Trip</button>
-      </td>
-    </tr>
-  </script>
-
-  <script type='text/html' id='infowindow-template'>
-    <p>
-      Hello world
-    </p>
-  </script>
-
-  <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw"></script>
-  <script type='text/javascript' src='app/models.js'></script>
-  <script type='text/javascript' src="app/view_model.js"></script>
+        <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw"></script>
+        <script type='text/javascript' src='app/models.js'></script>
+        <script type='text/javascript' src="app/view_model.js"></script>
 </body>

@@ -2,41 +2,25 @@
 var viewModel = function() {
   // TODO: figure out the self/this wieirdness
   var self = this;
-  this.locations = ko.observableArray([]);
+  self.locations = ko.observableArray([]);
   this.status = ko.observable('active');
   self.center = ko.observable({
     lat: 44.1899178,
     lng: -73.7866135
   });
   self.mapDiv = document.getElementById('map');
-  this.map = {};
-  this.filter = {
+  self.map = {};
+  self.filter = {
     types: ['climb', 'food'],
     keyword: 'roaring'
   };
-  self.keyword= ko.observable('');
+  self.keyword = ko.observable('');
   self.query = ko.observable('');
-  this.loc_types = ko.observableArray(['climb', 'food']);
-  this.mileage = ko.observableArray([100, 50, 10, 5, 1]);
-  // this.climbs = ko.computed(function() {
-  //   return self.loadData();
-  // });
-  this.foods = ko.observableArray(this.locations());
-  this.trip = ko.observableArray([]);
-  // location that has infowindow open
-  this.selectedLocation = ko.observable();
-  this.filtered_locations = ko.computed(function() {
-    var filter = self.keyword().toLowerCase();
-    console.log(self.locations());
-    if (!filter) {
-      return self.locations();
-    } else {
-      return ko.utils.arrayFilter(self.locations(), function(item) {
-        return item.name().toLowerCase().indexOf(filter) > -1;
-      });
-    }
-  });
-  this.yelp_settings = ko.computed(function() {
+  self.loc_types = ko.observableArray(['climb', 'food']);
+  self.mileage = ko.observableArray([100, 50, 10, 5, 1]);
+  self.filtered_locations = ko.observableArray(self.locations());
+  self.selectedLocation = ko.observable();
+  self.yelp_settings = ko.computed(function() {
     var yelp_url = 'https://api.yelp.com/v2/search?',
       consumerSecret = 'fTfDa0IIFU0QzF7caXw3Ba9-bEQ',
       tokenSecret = 'hH68LJgKUkwLNhUf0Yavw6jdVes',
@@ -74,7 +58,7 @@ var viewModel = function() {
     var yelp_settings = {
       url: yelp_url,
       data: parameters,
-      cache: true, // This is crucial to include as well to prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
+      cache: true, // self is crucial to include as well to prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
       dataType: 'jsonp',
       success: function(results) {
         console.log('Success yelp AJAX call!');
@@ -190,21 +174,15 @@ viewModel.prototype = {
 
   search: function(value) {
     var locations = this.locations();
-    var foods = this.foods();
-    console.log(locations);
-    console.log(value);
-    console.log(foods);
-    // this.foods.removeAll();
-    if(value){
-      this.foods(
+    if (value) {
+      this.filtered_locations(
         locations.filter(function(each) {
           return each.name().toLowerCase().indexOf(value.toLowerCase()) > -1;
         })
       );
     } else {
-      this.foods(locations);
+      this.filtered_locations(locations);
     }
-    console.log(this.foods());
   },
 
   // initializies ViewModel with map and adds markers

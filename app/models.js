@@ -57,6 +57,7 @@ var Location = function(arg) {
     content += '<img src="' + this.image_url() + '">';
     this.infowindow = new google.maps.InfoWindow();
     this.infowindow.setContent(content);
+
       // when marker is clicked will open up info window
       this.marker.addListener('click', function() {
         // FIXME: how to select an object oriented way currently stored in global var
@@ -67,6 +68,8 @@ var Location = function(arg) {
         view_model.selectedLocation(self);
         self.infowindow.open(map, self.marker);
       });
+
+      this.marker.addListener();
     };
 
     Location.prototype = {
