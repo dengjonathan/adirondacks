@@ -55,22 +55,21 @@
     </div>
 
   <div>
-    <ul data-bind='foreach:locations'>
-      <li data-bind='text: $data.name'></li>
-    </ul>
-  </div>
-
-  <div>
-    <ul data-bind='foreach:foods'>
-      <li data-bind='text: $data.name'></li>
-    </ul>
+    <table>
+      <tbody data-bind='foreach: locations'>
+        <tr>
+          <td data-bind='text: $data.name'></td>
+          <td data-bind='click: $root.addTrip'><button class='btn btn-small'>Add to Trip</button></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   </nav>
 
   <main id='panel'>
     <div class='navbar'>
-      <button id='slideout' class='btn btn-info btn-small'><span class="menu-hamburger">&#9776;</span></button>
+      <button id='slideout' class='btn btn-info btn-small' data-bind ='click: slideOut'><span class="menu-hamburger">&#9776;</span></button>
     <div class='navbar-brand'>
       <h3>Dacks Climber</h3>
     </div>
@@ -103,45 +102,4 @@
   <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw"></script>
   <script type='text/javascript' src='app/models.js'></script>
   <script type='text/javascript' src="app/view_model.js"></script>
-  <script type='text/javascript' src='app/main.js'></script>
-  <script type='text/javascript' src="app/animations.js"></script>
 </body>
-
-</html>
-||||||| merged common ancestors
-=======
-<!Doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>an spa using google maps</title>
-  <script data-main="app/config" src="bower_components/requirejs/require.js"></script>
-</head>
-<body>
-  <h1>Dacks_layabout running!</h1>
-  <div class = 'status'>
-      Data Binding:
-      <span class="status" data-bind="text: status">Inactive</span>
-  </div>
-
-  <div class = 'google_map' id='map'>
-    Map Loading
-  </div>
-  <script type='text/javascript' src='app/main.js'></script>
-  <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw&callback=initMap" async defer></script>
-  <script type='text/javascript' src='app/maps_api.js'></script>
-  <script>
-  var map;
-
-  function initMap() {
-      map = new google.maps.Map(document.getElementById('map'), {
-          center: {
-              lat: 44.2561727,
-              lng: -73.8008399
-          },
-          zoom: 10
-      });
-  }
-  </script>
-</body>
-</html>
