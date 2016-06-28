@@ -1,4 +1,5 @@
 // And the monster is alive!
 appViewModel = new viewModel(data);
 appViewModel.init();
-ko.applyBindings(appViewModel);
+$.when($.ajax(appViewModel.yelp_settings)).then(ko.applyBindings(appViewModel))
+//need to wait until after Yelp API returns to apply Ko bindings

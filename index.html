@@ -16,9 +16,6 @@
 <body>
   <!--slide out panel with options -->
   <nav id="menu" class='slideout-menu slideout'>
-    <header>
-      <h2>Options</h2>
-    </header>
 
     <div class='center-map'> Map Center
       </br>
@@ -57,54 +54,17 @@
       </form>
     </div>
 
-    <div class='locations'>
-      <p>
-        Locations
-      </p>
-      <p data-bind='$root.locations().length'></p>
-      <table>
-        <th>
-          Type
-        </th>
-        <th>Name</th>
-        <th>Location</th>
-        <th>Description</th>
-        <tbody data-bind='foreach: locations'>
-          <tr>
-            <td data-bind='text: $data'></td>
-            <td data-bind='text: loc_type'></td>
-            <td data-bind='text: name'></td>
-            <td data-bind='text: location'></td>
-            <td data-bind='text: desc'></td>
-            <td>
-              <!-- <button data-bind='click: $parent.addTrip.bind($parent)'>Add to Trip</button> -->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div>
+    <ul data-bind='foreach:locations'>
+      <li data-bind='text: $data.name'></li>
+    </ul>
+  </div>
 
-    <div class='yelp'>
-      <table>
-        <th>
-          Type
-        </th>
-        <th>Name</th>
-        <th>Location</th>
-        <th>Description</th>
-        <tbody data-bind='foreach: yelp_results'>
-          <tr>
-            <!-- <img data-bind="attr: { href:}"></td> -->
-            <td data-bind='text: $data.name'></td>
-            <td data-bind='text: $data.location'></td>
-            <td data-bind='text: $data.desc'></td>
-            <td>
-              <button data-bind='click: $parent.addTrip.bind($parent)'>Add to Trip</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div>
+    <ul data-bind='foreach:foods'>
+      <li data-bind='text: $data.name'></li>
+    </ul>
+  </div>
 
   </nav>
 
@@ -115,33 +75,12 @@
       <h3>Dacks Climber</h3>
     </div>
     </div>
+    <p>
+      Locations number
+    </p>
     <p data-bind='text: $root.locations().length'></p>
-<div class='trip-plan'>
-  <h4>Plan Your Trip</h4>
-      <table>
-        <th>
-          Type
-        </th>
-        <th>Name</th>
-        <th>Location</th>
-        <th>Description</th>
-        <tbody data-bind="template: {name: 'location-row', foreach: $root.trip}">
-        </tbody>
-      </table>
-    </div>
 
     <div id='map'>Map Loading</div>
-    <div data-bind="foreach: locations">
-      <p data-bind='text: name'></p>
-    </div>
-  </main>
-
-  <div id='infowindow-template' data-bind='with: selectedLocation'>
-    <p data-bind='text: name'></p>
-    <p data-bind='text: desc'></p>
-    <button data-bind='click: function(){console.log($data)}'>Add to Trip</button>
-    </tr>
-  </div>
 
   <!-- KO template -->
   <script type='text/html' id='location-row'>

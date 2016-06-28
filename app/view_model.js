@@ -9,48 +9,66 @@ var viewModel = function() {
   });
   self.mapDiv = document.getElementById('map');
   this.map = {};
-  this.filters = {
-    types: ['climb', 'food', 'bivy', 'run'],
-    selected: false
+  this.filter = {
+    types: ['climb', 'food'],
+    keyword: 'roaring'
   };
-  this.loc_types = ko.observableArray(['climb', 'food', 'bivy', 'run']);
+  this.loc_types = ko.observableArray(['climb', 'food']);
   this.mileage = ko.observableArray([100, 50, 10, 5, 1]);
-  this.yelp_results = ko.observableArray([]);
+  this.climbs = ko.computed(function() {
+    return self.loadData();
+  });
+  this.foods = ko.computed(function() {
+    return self.getYelp();
+  });
   this.locations = ko.observableArray([]);
   this.trip = ko.observableArray([]);
+  // location that has infowindow open
   this.selectedLocation = ko.observable();
+  // this.filtered_locations = ko.computed(function() {
+  //   var filter = self.filter.keyword.toLowerCase();
+  //   console.log(self.locations());
+  //   if (!filter) {
+  //     return this.locations();
+  //   } else {
+  //     return ko.utils.arrayFilter(self.locations(), function(item) {
+  //       return item.name().toLowerCase().indexOf(filter) > -1;
+  //     });
+  //   }
+  // });
+
 };
 
 //viewmodel methods
 viewModel.prototype = {
-    // change the locations shown by location type and mileage
-    changeFilter: function(request) {
-      var loc_types = [];
-      console.log($(request.climb).val());
-      console.log($(request.keyword).val())
-      if ($(request.climb).val() == 'on') {
-        //something
-      };
-      var filter = {
-        loc_type: $(request.loc_type).val(),
-        keyworkd: $(request.mileage).val()
-      };
-      this.filter = filter;
-    },
-
-    filterLocations: function() {
-      if (!this.filter) {
-        this.filterLocations = this.locations;
-      } else {
-        this.filterLocations = ko.utils.arrayFilter(this.locations(), function(item) {
-          return ko.utils.stringStartsWith(item.name().toLowerCase(), filter);
-        });
-      }
-    },
-    return ko.utils.arrayFilter(this.items(), function(item) {
-      return ko.utils.stringStartsWith(item.name().toLowerCase(), filter);
-    });
+  // change the locations shown by location type and mileage
+  changeFilter: function(request) {
+    var loc_types = [];
+    var keyword = $(request.keyword).val();
+    console.log($(request.climb).val());
+    if ($(request.climb).val() == 'on') {
+      loc_types.push('climb')
+    }
+    if ($(request.food).val() == 'on') {
+      loc_types.push('food')
+    }
+    this.filter = {
+      loc_type: loc_types,
+      keyword: keyword
+    };
+    console.log(this.filter);
   },
+
+  filterLocations: function() {
+    if (!this.filter.keyword) {
+      this.filterLocations = this.locations;
+    } else {
+      this.filterLocations = ko.utils.arrayFilter(this.locations(), function(item) {
+        return ko.utils.stringStartsWith(this.filter.keyword);
+      });
+    }
+  },
+
   initMap: function() {
     var self = this;
     self.map = new Map(self.mapDiv, self.center());
@@ -75,15 +93,18 @@ viewModel.prototype = {
 
   loadData: function() {
     // load all initial climbing locations
-    var self = this;
+    var locations = [];
     data.forEach(function(e) {
-      self.locations().push(new Location(e));
+      locations.push(new Location(e));
     });
+    return locations
   },
 
   // pulls locations from yelp api
   getYelp: function() {
     var self = this;
+    console.log(this);
+    // var locations = self.locations();
     var yelp_API = {
       yelp_url: 'https://api.yelp.com/v2/search?',
       // TODO: find way to access this info without openly displaying
@@ -134,26 +155,38 @@ viewModel.prototype = {
       dataType: 'jsonp',
       success: function(results) {
         console.log('Success yelp AJAX call!');
-        results.businesses.forEach(function(each) {
-          self.yelp_results.push(each)
+        results.businesses.forEach(function(e) {
+          var arg = {
+            name: e.name,
+            position: {
+              lat: e.location.coordinate.latitude,
+              lng: e.location.coordinate.longitude
+            },
+            desc: e.snippet_text,
+            loc_type: 'food',
+            phone: e.display_phone,
+            image_url: e.image_url,
+            mobile_url: e.mobile_url,
+            rating: e.rating,
+          };
+          locations.push(new Location(arg));
         });
-        self.loadYelp();
-        self.addMarkers();
+        // self.addMarkers();
       },
       fail: function() {
         // Do stuff on fail
         console.log('error during Yelp AJAX call');
       }
     };
-    return $.ajax(yelp_settings).promise();
+    $.when($.ajax(yelp_settings));
   },
 
   /* after this.yelp_results is populated with function this.getYelp
   this functions constructs new Location object for each result and pushes
   to this.locations */
   loadYelp: function() {
-    console.log(this);
     var self = this;
+    var locations = [];
     self.yelp_results().forEach(function(e) {
       var arg = {
         name: e.name,
@@ -168,8 +201,10 @@ viewModel.prototype = {
         mobile_url: e.mobile_url,
         rating: e.rating,
       };
-      self.locations().push(new Location(arg));
+      locations.push(new Location(arg));
     });
+    console.log(locations);
+    return locations;
   },
 
   // adds location to trip planning array
