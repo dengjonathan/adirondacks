@@ -1,5 +1,6 @@
-function getYelp(viewModel) {
-  var self = viewModel;
+function() get {
+  var self = this;
+  console.log(this);
   // var locations = self.locations();
   var yelp_API = {
     yelp_url: 'https://api.yelp.com/v2/search?',
