@@ -14,74 +14,65 @@ var viewModel = function() {
     types: ['climb', 'food'],
     keyword: 'roaring'
   };
+  self.keyword= ko.observable('');
+  self.query = ko.observable('');
   this.loc_types = ko.observableArray(['climb', 'food']);
   this.mileage = ko.observableArray([100, 50, 10, 5, 1]);
   // this.climbs = ko.computed(function() {
   //   return self.loadData();
   // });
-  this.foods = ko.computed(function() {
-    // return self.getYelp();
-  });
+  this.foods = ko.observableArray(this.locations());
   this.trip = ko.observableArray([]);
   // location that has infowindow open
   this.selectedLocation = ko.observable();
-  // this.filtered_locations = ko.computed(function() {
-  //   var filter = self.filter.keyword.toLowerCase();
-  //   console.log(self.locations());
-  //   if (!filter) {
-  //     return this.locations();
-  //   } else {
-  //     return ko.utils.arrayFilter(self.locations(), function(item) {
-  //       return item.name().toLowerCase().indexOf(filter) > -1;
-  //     });
-  //   }
-  // });
-  this.yelp_settings = ko.computed(function() {
-    var yelp_API = {
-      yelp_url: 'https://api.yelp.com/v2/search?',
-      // TODO: find way to access this info without openly displaying
-      consumerSecret: 'fTfDa0IIFU0QzF7caXw3Ba9-bEQ',
-      tokenSecret: 'hH68LJgKUkwLNhUf0Yavw6jdVes',
-      oauth_consumer_key: 'QbAL_pqgAo730xi3DAC2qA',
-      oauth_token: 'aBZbbpsTdhq9869cQVdja221aJaFuDqv',
-      term: 'food',
-      location: 'Keene+Valley+NY',
-      radius: '20000',
-    };
-
-    // generate nonce key
-    function nonce_generate() {
-      return (Math.floor(Math.random() * 1e12).toString());
+  this.filtered_locations = ko.computed(function() {
+    var filter = self.keyword().toLowerCase();
+    console.log(self.locations());
+    if (!filter) {
+      return self.locations();
+    } else {
+      return ko.utils.arrayFilter(self.locations(), function(item) {
+        return item.name().toLowerCase().indexOf(filter) > -1;
+      });
     }
-
-    var httpMethod = 'GET';
+  });
+  this.yelp_settings = ko.computed(function() {
+    var yelp_url = 'https://api.yelp.com/v2/search?',
+      consumerSecret = 'fTfDa0IIFU0QzF7caXw3Ba9-bEQ',
+      tokenSecret = 'hH68LJgKUkwLNhUf0Yavw6jdVes',
+      oauth_consumer_key = 'QbAL_pqgAo730xi3DAC2qA',
+      oauth_token = 'aBZbbpsTdhq9869cQVdja221aJaFuDqv',
+      term = 'food',
+      location = 'Keene+Valley+NY',
+      radius = '20000',
+      httpMethod = 'GET';
 
     var parameters = {
-      oauth_consumer_key: yelp_API.oauth_consumer_key,
-      oauth_token: yelp_API.oauth_token,
-      oauth_nonce: nonce_generate(),
+      oauth_consumer_key: oauth_consumer_key,
+      oauth_token: oauth_token,
+      oauth_nonce: (Math.floor(Math.random() * 1e12).toString()),
       oauth_timestamp: Math.floor(Date.now() / 1000),
       oauth_signature_method: 'HMAC-SHA1',
       oauth_version: '1.0',
       callback: 'cb',
-      term: yelp_API.term,
-      location: yelp_API.location,
-      radius: yelp_API.radius
+      term: term,
+      location: location,
+      radius: radius
     };
 
     var encodedSignature = oauthSignature.generate(
       'GET',
-      yelp_API.yelp_url,
+      yelp_url,
       parameters,
-      yelp_API.consumerSecret,
-      yelp_API.tokenSecret, {
+      consumerSecret,
+      tokenSecret, {
         encodeSignature: false
       });
 
     parameters.oauth_signature = encodedSignature;
 
     var yelp_settings = {
-      url: yelp_API.yelp_url,
+      url: yelp_url,
       data: parameters,
       cache: true, // This is crucial to include as well to prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
       dataType: 'jsonp',
@@ -176,15 +167,15 @@ viewModel.prototype = {
 
   // adds location to trip planning array
   addTrip: function(new_loc) {
-    console.log('location added to trip')
-    console.log(new_loc)
-    this.trip().push(new_loc)
+    // FIXME: this points to location added for some reason
+    console.log('location added to trip');
+    this.trip.push(new_loc)
   },
 
   //removes trip from trip planning array
   removeTrip: function(loc) {
     console.log('location removed from trip');
-    this.trip().remove(loc)
+    this.trip.remove(loc);
   },
 
   slideOut: function() {
@@ -197,11 +188,31 @@ viewModel.prototype = {
     slideout.toggle();
   },
 
+  search: function(value) {
+    var locations = this.locations();
+    var foods = this.foods();
+    console.log(locations);
+    console.log(value);
+    console.log(foods);
+    // this.foods.removeAll();
+    if(value){
+      this.foods(
+        locations.filter(function(each) {
+          return each.name().toLowerCase().indexOf(value.toLowerCase()) > -1;
+        })
+      );
+    } else {
+      this.foods(locations);
+    }
+    console.log(this.foods());
+  },
+
   // initializies ViewModel with map and adds markers
-    init: function() {
+  init: function() {
     this.loadData();
     this.initMap();
     this.addMarkers();
+    this.query.subscribe(this.search.bind(this));
   }
 };
 

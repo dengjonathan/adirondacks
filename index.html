@@ -56,10 +56,11 @@
 
   <div>
     <table>
-      <tbody data-bind='foreach: locations'>
+    <th><input placeholder="Search…" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off"></th>
+      <tbody data-bind='foreach: foods'>
         <tr>
           <td data-bind='text: $data.name'></td>
-          <td data-bind='click: $root.addTrip'><button class='btn btn-small'>Add to Trip</button></td>
+          <!-- <td><button data-bind='click: $parent.addTrip($data)' class='btn btn-small'>Add to Trip</button></td> -->
         </tr>
       </tbody>
     </table>
@@ -78,6 +79,17 @@
       Locations number
     </p>
     <p data-bind='text: $root.locations().length'></p>
+
+    <div>
+      <table>
+        <tbody data-bind='foreach: trip'>
+          <tr>
+            <td data-bind='text: $data.name'></td>
+            <!-- <td><button data-bind='click: $parent.removeTrip($data)' class='btn btn-small'>Remove Trip</button></td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <div id='map'>Map Loading</div>
 
