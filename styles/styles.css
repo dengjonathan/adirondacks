@@ -1,0 +1,65 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  width: available;
+  height: 1000px;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+}
+
+nav{
+  background-color:#b3cccc;
+  box-shadow: 10px 10px 5px #888888;
+}
+
+main {
+  background-color:  #6F90A2;
+}
+
+.locations{
+  overflow-y: auto;
+  height: 600px;
+}
+
+.navbar{
+}
+
+.slideout-menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+  width: 256px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: none;
+}
+
+.slideout-panel {
+  position: relative;
+  z-index: 1;
+}
+
+.slideout-open,
+.slideout-open body,
+.slideout-open .slideout-panel {
+  overflow: hidden;
+}
+
+.slideout-open .slideout-menu {
+  display: block;
+}
+
+.menu-hamburger {
+  font-size: 40px;
+  font-weight: bolder;
+}

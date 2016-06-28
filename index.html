@@ -33,8 +33,9 @@
                 </table>
             </form>
         </div>
-
+        </br>
         <div>
+            <h3>Locations</h3>
             <table>
                 <th>
                     Search by Name
@@ -42,8 +43,9 @@
                 </th>
                 <tbody data-bind='foreach: filtered_locations'>
                     <tr>
-                        <td data-bind='text: $data.name, click: $data.marker.animate()'></td>
-                        <!-- <td><button data-bind='click: $parent.addTrip($data)' class='btn btn-small'>Add to Trip</button></td> -->
+                        <td>
+                            <a data-bind='text: $data.name, attr{href: $data.mobile_url}'></a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
