@@ -20,6 +20,7 @@ var viewModel = function() {
     self.mileage = ko.observableArray([100, 50, 10, 5, 1]);
     self.filtered_locations = ko.observableArray(self.locations());
     self.selectedLocation = ko.observable();
+    self.error = ko.observable();
     self.yelp_settings = ko.computed(function() {
         var yelp_url = 'https://api.yelp.com/v2/search?',
             consumerSecret = 'fTfDa0IIFU0QzF7caXw3Ba9-bEQ',
@@ -92,8 +93,6 @@ var viewModel = function() {
 viewModel.prototype = {
 
     initMap: function() {
-        var self = this;
-        // console.log(this.mapDiv, this.center())
         this.map = new Map(this.mapDiv, this.center());
     },
 
@@ -156,12 +155,21 @@ viewModel.prototype = {
         this.addMarkers();
     },
 
+    checkMap: function() {
+        if (!self.map) {
+            self.error = 'Error loading map';
+        }
+        console.log(self.map);
+    },
+
     // initializies ViewModel with map and adds markers
     init: function() {
         this.loadData();
         this.initMap();
         this.addMarkers();
         this.query.subscribe(this.search.bind(this));
+        // show error if map doesn't load
+        setTimeout(this.checkMap, 3000)
     }
 };
 
