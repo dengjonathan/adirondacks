@@ -1,6 +1,5 @@
 // viewModel constructor
 var viewModel = function() {
-    // TODO: figure out the self/this wieirdness
     var self = this;
     self.locations = ko.observableArray([]);
     self.status = ko.observable('active');

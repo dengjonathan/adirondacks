@@ -85,7 +85,6 @@ var Location = function(arg) {
 
     // when marker is clicked will open up info window
     this.marker.addListener('click', function() {
-        // FIXME: how to select an object oriented way currently stored in global var
         var view_model = appViewModel
         if (view_model.selectedLocation()) {
             view_model.selectedLocation().infowindow.close();
@@ -105,7 +104,6 @@ Location.prototype = {
 
 // Google Map object constructor
 var Map = function(mapDiv, center_pos, options) {
-    // TODO: refactor to have viewModel pass in args for constructor
     var mapOptions = options || {
         center: center_pos,
         zoom: 11,

@@ -1,140 +1,26 @@
-<<<<<<< HEAD
-# neighborhood_map_spa
+## About
 
-single page app showing adirondacks climbing
-
-## Getting Started
-
-Make sure you have the latest packages installed
-
-```
-npm install
-bower install
-```
-
-Note: If you don't have `npm` installed, make sure you have
-[node](http://nodejs.com) installed. If you don't have bower,
-`npm install -g bower`.
-
-The above steps will download all the required software to
-build and run this app, such as [grunt](http://gruntjs.com),
-[requirejs](http://requirejs.org), and [jquery](http://jquery.com).
-
-## Running the server
-
-You can run your app using `grunt preview`. This will start a
-server on `localhost:8000`, meaning you can simply go to the
-url [localhost:8000/index.html](http://localhost:8000/index.html)
-while it's running.
-
-If you'd like to run the compiled version, run
-`grunt preview-live`.
-
-## Building the application
-
-This application uses requirejs to load the various modules in
-the app folder. However, upon build, all of these files are
-concatenated and minified together to create a small, compressed
-javascript file.
-
-Running `grunt` by itself will run through all of the steps of
-linting the javascript, building out dependencies and ultimately
-creating `/dist/require.js`.
-
-## Working with the scaffolded app
-
-There's just enough to in place to get you going. Go ahead
-and make your changes to `index.html`. You'll start your
-javascript work in `app/main.js` by requiring your first
-modules. Past that, well, the world is your oyster.
-
-### Tests
-
-The test directory uses `qunit`, which is run using phantomJS
-in the console, but can also be ran by launching the server
-`grunt preview` and going to `localhost:8000/test/index.html`.
-
-Create tests in the `test/tests.js` file, where you can
-require your modules and test their functionality.
-
-## Deploying your application on a server
-
-Assuming you're already ran `npm install` and `bower install`,
-the only pieces required to run the application in its built
-state is running `grunt`.
-
-If you're using a webserver like apache or nginx, you'll want
-to create a redirect from `/components/requirejs/require.js` to
-`/dist/require.js`. (*Note: this is exactly what `grunt
-preview-live` does*)
-||||||| merged common ancestors
-=======
-# Dacks_layabout
-
-an spa using google maps
+Adirondacks is a neighborhood map Single Page Application built using Knockout,
+JQuery,and Bootstrap.  Andirondacks allows climbers to explore climbing areas
+and food places (pulled from the Yelp API) on the eastern side of the Adirondacks.
 
 ## Getting Started
 
-Make sure you have the latest packages installed
+Adirondacks is currently deployed at http://dengjonathan.github.io/Adirondacks
+
+To run it on your local machine, clone the repository and cd into the adirondacks directory:
 
 ```
-npm install
-bower install
+git clone https://github.com/dengjonathan/adirondacks
+cd adirondacks
+```
+Open the index.html file:
+
+```
+open index.html
 ```
 
-Note: If you don't have `npm` installed, make sure you have
-[node](http://nodejs.com) installed. If you don't have bower,
-`npm install -g bower`.
+To use the app, click on any marker to bring up relevant information about each site.
 
-The above steps will download all the required software to
-build and run this app, such as [grunt](http://gruntjs.com),
-[requirejs](http://requirejs.org), and [jquery](http://jquery.com).
-
-## Running the server
-
-You can run your app using `grunt preview`. This will start a
-server on `localhost:8000`, meaning you can simply go to the
-url [localhost:8000/index.html](http://localhost:8000/index.html)
-while it's running.
-
-If you'd like to run the compiled version, run
-`grunt preview-live`.
-
-## Building the application
-
-This application uses requirejs to load the various modules in
-the app folder. However, upon build, all of these files are
-concatenated and minified together to create a small, compressed
-javascript file.
-
-Running `grunt` by itself will run through all of the steps of
-linting the javascript, building out dependencies and ultimately
-creating `/dist/require.js`.
-
-## Working with the scaffolded app
-
-There's just enough to in place to get you going. Go ahead
-and make your changes to `index.html`. You'll start your
-javascript work in `app/main.js` by requiring your first
-modules. Past that, well, the world is your oyster.
-
-### Tests
-
-The test directory uses `qunit`, which is run using phantomJS
-in the console, but can also be ran by launching the server
-`grunt preview` and going to `localhost:8000/test/index.html`.
-
-Create tests in the `test/tests.js` file, where you can
-require your modules and test their functionality.
-
-## Deploying your application on a server
-
-Assuming you're already ran `npm install` and `bower install`,
-the only pieces required to run the application in its built
-state is running `grunt`.
-
-If you're using a webserver like apache or nginx, you'll want
-to create a redirect from `/components/requirejs/require.js` to
-`/dist/require.js`. (*Note: this is exactly what `grunt
-preview-live` does*)
->>>>>>> 1dc5376fd365e11ad669d8bdcc3c6e35a9791090
+Additionally, typing a search term into the keyword input will filter available locations
+based on name.
