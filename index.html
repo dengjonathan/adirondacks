@@ -15,11 +15,15 @@
 </head>
 
 <body>
-    <!--slide out panel with options -->
-    <nav id="menu" class='slideout-menu slideout'>
 
-        <div class='center-map'> Map Center
-            </br>
+    <div class='cover-div functions'>
+        <div id='search-div'>
+          <h3>Search Locations</h3>
+            <input placeholder="Keyword" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+        </div>
+
+        <div class='center-map'>
+            <h3>Map Center</h3>
             <form data-bind='submit: changeCenter'>
                 <table>
                     <tr>
@@ -28,6 +32,7 @@
                     <tr>
                         <span data-bind: 'text: status'>LNG: <input name='lng' data-bind='value:center().lng' /></span>
                     </tr>
+                  </br>
                     <tr>
                         <button type="submit">Change Map Center</button>
                     </tr>
@@ -35,42 +40,31 @@
             </form>
         </div>
 
-        </br>
-        <div class='locations overlay col-md-3'>
+        <div class='locations'>
             <h3>Locations</h3>
-        </br>
-        <div>
-            <h3>Locations</h3>
+                <table>
+                    <th>
 
-        <div>
-            <table>
-              <th>
-
-                </th>
-                <tbody data-bind='foreach: filtered_locations'>
-                    <tr>
-                        <td data-bind='text: $data.name, click: $data.marker.animate()'></td>
-                        <!-- <td><button data-bind='click: $parent.addTrip($data)' class='btn btn-small'>Add to Trip</button></td> -->
-                    </tr>
-                </tbody>
-            </table>
+                    </th>
+                    <tbody data-bind='foreach: filtered_locations'>
+                        <tr>
+                            <td data-bind='text: $data.name'></td>
+                        </tr>
+                    </tbody>
+                </table>
         </div>
-    </nav>
+    </div>
 
-    <main id='panel'>
-        <div class='navbar'>
-            <button id='slideout' class='btn btn-info btn-small' data-bind='click: slideOut'><span class="menu-hamburger">&#9776;</span></button>
-            <div class='navbar-brand'>
-                <h3>Dacks Climber</h3>
-            </div>
-        </div>
-      
-        Search by Name
-            <input placeholder="Enter keyword" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+    <div class='cover-div about'>
+        This is about the app
+    </div>
 
-        <div id='map'>Map Loading</div>
+    <div id='map'>
+      Map Loading
+    </div>
 
-        <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw"></script>
-        <script type='text/javascript' src='app/models.js'></script>
-        <script type='text/javascript' src="app/view_model.js"></script>
+
+    <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw"></script>
+    <script type='text/javascript' src='app/models.js'></script>
+    <script type='text/javascript' src="app/view_model.js"></script>
 </body>

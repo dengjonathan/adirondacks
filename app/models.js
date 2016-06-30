@@ -135,6 +135,3 @@ var Marker = function(name, position, loc_type) {
         icon: icon,
     });
 };
-
-// // snippet to take markers off map
-// marker.setMap(null);

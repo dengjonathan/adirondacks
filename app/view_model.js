@@ -15,6 +15,7 @@ var viewModel = function() {
         keyword: 'roaring'
     };
     self.keyword = ko.observable('');
+    self.slideout = {};
     self.query = ko.observable('');
     self.loc_types = ko.observableArray(['climb', 'food']);
     self.mileage = ko.observableArray([100, 50, 10, 5, 1]);
@@ -28,7 +29,7 @@ var viewModel = function() {
             oauth_token = 'aBZbbpsTdhq9869cQVdja221aJaFuDqv',
             term = 'food',
             location = 'Keene+Valley+NY',
-            radius = '20000',
+            radius = '40000',
             httpMethod = 'GET';
 
         var parameters = {
@@ -160,6 +161,20 @@ viewModel.prototype = {
             'padding': 256,
             'tolerance': 70
         });
+        console.log(slideout);
+        self.slideout = slideout;
+        slideout.toggle();
+    },
+
+    slideOut: function() {
+        var slideout = new Slideout({
+            'panel': document.getElementById('panel'),
+            'menu': document.getElementById('menu'),
+            'padding': 256,
+            'tolerance': 70
+        });
+        console.log(slideout);
+        self.slideout = slideout;
         slideout.toggle();
     },
 
@@ -190,10 +205,11 @@ viewModel.prototype = {
 // And the monster is alive!
 appViewModel = new viewModel(data);
 
-// wait until after Yelp API returns to drop markers and implement search
+// add new markers when Yelp API Ajax request returns
 $.when($.ajax(appViewModel.yelp_settings())).then(function() {
     appViewModel.addMarkers();
     appViewModel.search();
 });
+
 appViewModel.init();
 ko.applyBindings(appViewModel);
