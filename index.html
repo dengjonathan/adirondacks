@@ -34,18 +34,23 @@
                 </table>
             </form>
         </div>
+
         </br>
         <div class='locations overlay col-md-3'>
             <h3>Locations</h3>
+        </br>
+        <div>
+            <h3>Locations</h3>
+
+        <div>
             <table>
               <th>
 
                 </th>
                 <tbody data-bind='foreach: filtered_locations'>
                     <tr>
-                        <td>
-                            <a data-bind='text: $data.name, attr{href: $data.mobile_url}'></a>
-                        </td>
+                        <td data-bind='text: $data.name, click: $data.marker.animate()'></td>
+                        <!-- <td><button data-bind='click: $parent.addTrip($data)' class='btn btn-small'>Add to Trip</button></td> -->
                     </tr>
                 </tbody>
             </table>
@@ -59,6 +64,7 @@
                 <h3>Dacks Climber</h3>
             </div>
         </div>
+      
         Search by Name
             <input placeholder="Enter keyword" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
 
