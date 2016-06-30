@@ -47,8 +47,7 @@ var data = [{
     },
     loc_type: 'climb',
     desc: 'A wonderful multipitch area with some great crack and face routes. Potential for new climbs is a definite possibility. The crag is an easy approach. It is roughly 20 minutes from the road. The rock is excellent in quality and there are spectacular views from an amazing summit. Hurricane is definately a worthy destination.'
-}
-];
+}];
 
 /* Location class - creates a location object including marker and relevant
 information */
@@ -123,13 +122,18 @@ var LOC_ICONS = {
 // Google Map marker constructor
 var Marker = function(name, position, loc_type) {
     var icon = LOC_ICONS[loc_type];
-    return new google.maps.Marker({
-        name: name,
-        position: {
-            lat: position.lat(),
-            lng: position.lng()
-        },
-        animation: google.maps.Animation.DROP,
-        icon: icon,
-    });
+    try {
+        return new google.maps.Marker({
+            name: name,
+            position: {
+                lat: position.lat(),
+                lng: position.lng()
+            },
+            animation: google.maps.Animation.DROP,
+            icon: icon,
+        });
+    } catch (error) {
+      alert('Google API failed to load and error is ' + error)
+    }
+
 };

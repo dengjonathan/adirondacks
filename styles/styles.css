@@ -5,13 +5,10 @@ html, body {
   font-family: 'Lato', sans-serif;
 }
 
-<<<<<<< HEAD
-||||||| merged common ancestors
 .locations{
   overflow-y: scroll;
 }
 
-=======
 td, p {
   font-size: 12px;
 }
@@ -21,7 +18,10 @@ h3 {
   font-weight: bold;
 }
 
->>>>>>> master
+.error{
+  color: #ff0000
+}
+
 #map {
   width: available;
   height: 1000px;
