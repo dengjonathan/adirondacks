@@ -5,6 +5,23 @@ html, body {
   font-family: 'Lato', sans-serif;
 }
 
+<<<<<<< HEAD
+||||||| merged common ancestors
+.locations{
+  overflow-y: scroll;
+}
+
+=======
+td, p {
+  font-size: 12px;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+>>>>>>> master
 #map {
   width: available;
   height: 1000px;
@@ -33,11 +50,6 @@ div.functions{
   width: 250px;
 }
 
-div.about{
-  right: 20px;
-  top: 60px;
-  height: 100px;
-}
 
 #input {
   top: 20px;

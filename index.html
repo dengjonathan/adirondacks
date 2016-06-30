@@ -2,14 +2,10 @@
 <html>
 
 <head>
-    <script type='text/javascript' src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script type='text/javascript' src='bower_components/knockout/dist/knockout.js'></script>
-    <script type='text/javascript' src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
-    <script type='text/javascript' src='bower_components/bootstrap/dist/js/bootstrap.js'></script>
-    <script type='text/javascript' src="bower_components/slideout.js/dist/slideout.min.js"></script>
-    <script type='text/javascript' src="bower_components/oauth-signature/dist/oauth-signature.js"></script>
-    <script type='text/javascript' src="bower_components/urijs/src/URI.js"></script>
-    <script type='text/javascript' src="bower_components/crypto-js/crypto-js.js"></script>
+    <script type='text/javascript' src="components/jquery.min.js"></script>
+    <script type='text/javascript' src='components/knockout.js'></script>
+    <script type='text/javascript' src='components/bootstrap.min.js'></script>
+    <script type='text/javascript' src="components/oauth-signature.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link type='text/css' rel='stylesheet' href='styles/styles.css' />
 </head>
@@ -18,7 +14,7 @@
 
     <div class='cover-div functions'>
         <div id='search-div'>
-          <h3>Search Locations</h3>
+            <h3>Search Locations</h3>
             <input placeholder="Keyword" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
         </div>
 
@@ -32,7 +28,7 @@
                     <tr>
                         <span data-bind: 'text: status'>LNG: <input name='lng' data-bind='value:center().lng' /></span>
                     </tr>
-                  </br>
+                    </br>
                     <tr>
                         <button type="submit">Change Map Center</button>
                     </tr>
@@ -42,16 +38,16 @@
 
         <div class='locations'>
             <h3>Locations</h3>
-                <table>
-                    <th>
+            <table>
+                <th>
 
-                    </th>
-                    <tbody data-bind='foreach: filtered_locations'>
-                        <tr>
-                            <td data-bind='text: $data.name'></td>
-                        </tr>
-                    </tbody>
-                </table>
+                </th>
+                <tbody data-bind='foreach: filtered_locations'>
+                    <tr>
+                        <td data-bind='text: $data.name'></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -60,6 +56,10 @@
     </div>
 
 
+    <div id='map'>Map Loading</div>
+
+
+    <!-- google map API script -->
     <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw"></script>
     <script type='text/javascript' src='app/models.js'></script>
     <script type='text/javascript' src="app/view_model.js"></script>

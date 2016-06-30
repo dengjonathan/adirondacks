@@ -1,140 +1,33 @@
-<<<<<<< HEAD
-# neighborhood_map_spa
+##About
+This is a project for the Udacity Full Stack Nanodegree. It is a neighborhood
+map of climbs and places to eat on the eastern side of the Adirondacks in
+NY State.
 
-single page app showing adirondacks climbing
+##Basic Instruction
+To run the app, download the repository and cd into the project folder:
 
-## Getting Started
+```cd adirondacks```
 
-Make sure you have the latest packages installed
+Open the index.html file in a modern browser (i.e. Chrome, Firefox):
 
-```
-npm install
-bower install
-```
+```open index.html```
 
-Note: If you don't have `npm` installed, make sure you have
-[node](http://nodejs.com) installed. If you don't have bower,
-`npm install -g bower`.
+Open the index.html file in a modern browser (chrome, firefox, ie11, etc.).
+Click markers or list items to select a location and retrieve info about it.
+Type into the filter/search box to filter the shown locations.
+Click page the small arrow at the bottom of the list to collapse or expand the list.
+Click anywhere on the actual map to close the information window that opens.
+Ensure options above filter/search box are what you want them to be.
+Notes
 
-The above steps will download all the required software to
-build and run this app, such as [grunt](http://gruntjs.com),
-[requirejs](http://requirejs.org), and [jquery](http://jquery.com).
+##Notes
 
-## Running the server
-
-You can run your app using `grunt preview`. This will start a
-server on `localhost:8000`, meaning you can simply go to the
-url [localhost:8000/index.html](http://localhost:8000/index.html)
-while it's running.
-
-If you'd like to run the compiled version, run
-`grunt preview-live`.
-
-## Building the application
-
-This application uses requirejs to load the various modules in
-the app folder. However, upon build, all of these files are
-concatenated and minified together to create a small, compressed
-javascript file.
-
-Running `grunt` by itself will run through all of the steps of
-linting the javascript, building out dependencies and ultimately
-creating `/dist/require.js`.
-
-## Working with the scaffolded app
-
-There's just enough to in place to get you going. Go ahead
-and make your changes to `index.html`. You'll start your
-javascript work in `app/main.js` by requiring your first
-modules. Past that, well, the world is your oyster.
-
-### Tests
-
-The test directory uses `qunit`, which is run using phantomJS
-in the console, but can also be ran by launching the server
-`grunt preview` and going to `localhost:8000/test/index.html`.
-
-Create tests in the `test/tests.js` file, where you can
-require your modules and test their functionality.
-
-## Deploying your application on a server
-
-Assuming you're already ran `npm install` and `bower install`,
-the only pieces required to run the application in its built
-state is running `grunt`.
-
-If you're using a webserver like apache or nginx, you'll want
-to create a redirect from `/components/requirejs/require.js` to
-`/dist/require.js`. (*Note: this is exactly what `grunt
-preview-live` does*)
-||||||| merged common ancestors
-=======
-# Dacks_layabout
-
-an spa using google maps
-
-## Getting Started
-
-Make sure you have the latest packages installed
-
-```
-npm install
-bower install
-```
-
-Note: If you don't have `npm` installed, make sure you have
-[node](http://nodejs.com) installed. If you don't have bower,
-`npm install -g bower`.
-
-The above steps will download all the required software to
-build and run this app, such as [grunt](http://gruntjs.com),
-[requirejs](http://requirejs.org), and [jquery](http://jquery.com).
-
-## Running the server
-
-You can run your app using `grunt preview`. This will start a
-server on `localhost:8000`, meaning you can simply go to the
-url [localhost:8000/index.html](http://localhost:8000/index.html)
-while it's running.
-
-If you'd like to run the compiled version, run
-`grunt preview-live`.
-
-## Building the application
-
-This application uses requirejs to load the various modules in
-the app folder. However, upon build, all of these files are
-concatenated and minified together to create a small, compressed
-javascript file.
-
-Running `grunt` by itself will run through all of the steps of
-linting the javascript, building out dependencies and ultimately
-creating `/dist/require.js`.
-
-## Working with the scaffolded app
-
-There's just enough to in place to get you going. Go ahead
-and make your changes to `index.html`. You'll start your
-javascript work in `app/main.js` by requiring your first
-modules. Past that, well, the world is your oyster.
-
-### Tests
-
-The test directory uses `qunit`, which is run using phantomJS
-in the console, but can also be ran by launching the server
-`grunt preview` and going to `localhost:8000/test/index.html`.
-
-Create tests in the `test/tests.js` file, where you can
-require your modules and test their functionality.
-
-## Deploying your application on a server
-
-Assuming you're already ran `npm install` and `bower install`,
-the only pieces required to run the application in its built
-state is running `grunt`.
-
-If you're using a webserver like apache or nginx, you'll want
-to create a redirect from `/components/requirejs/require.js` to
-`/dist/require.js`. (*Note: this is exactly what `grunt
-preview-live` does*)
->>>>>>> 1dc5376fd365e11ad669d8bdcc3c6e35a9791090
+Screens smaller than 800px wide are treaded differently than large screens to help prevent blocking information with the list. This includes autocallapse of the list, smaller infowindows, and no panorama on smaller screens.
+Most points have a panorama or streetview nearby. Those will open one in the infowindow if so.
+Session storage is used, so information will only pull once per point until you close that tab. This speeds up clicking a point again and reduces api calls.
+This tool uses Knockout, jquery, and also includes modernizr in hopes of further cross browser support. A modern browser is still recommended.
+The page is responsive but it is not intended for mobile viewing on small devices. If you are viewing on a mobile phone, landscape is recommended as the width of the list is fixed.
+Foursquare API powers the site information outside of the map and panorama.
+Google maps api v3 powers the maps and panoramas.
+Points used are not very interesting for the most part. They are for demonstration purposes mainly and were not carefulyl picked.
+Status API Training Shop Blog About

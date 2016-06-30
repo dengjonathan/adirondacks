@@ -3,7 +3,7 @@ var viewModel = function() {
     // TODO: figure out the self/this wieirdness
     var self = this;
     self.locations = ko.observableArray([]);
-    this.status = ko.observable('active');
+    self.status = ko.observable('active');
     self.center = ko.observable({
         lat: 44.1992034912109,
         lng: -73.786865234375
@@ -94,7 +94,8 @@ viewModel.prototype = {
 
     initMap: function() {
         var self = this;
-        self.map = new Map(self.mapDiv, self.center());
+        // console.log(this.mapDiv, this.center())
+        this.map = new Map(this.mapDiv, this.center());
     },
 
     changeCenter: function(arg) {
@@ -139,43 +140,6 @@ viewModel.prototype = {
         data.forEach(function(e) {
             self.locations().push(new Location(e));
         });
-    },
-
-    // adds location to trip planning array
-    addTrip: function(new_loc) {
-        // FIXME: this points to location added for some reason
-        console.log('location added to trip');
-        this.trip.push(new_loc)
-    },
-
-    //removes trip from trip planning array
-    removeTrip: function(loc) {
-        console.log('location removed from trip');
-        this.trip.remove(loc);
-    },
-
-    slideOut: function() {
-        var slideout = new Slideout({
-            'panel': document.getElementById('panel'),
-            'menu': document.getElementById('menu'),
-            'padding': 256,
-            'tolerance': 70
-        });
-        console.log(slideout);
-        self.slideout = slideout;
-        slideout.toggle();
-    },
-
-    slideOut: function() {
-        var slideout = new Slideout({
-            'panel': document.getElementById('panel'),
-            'menu': document.getElementById('menu'),
-            'padding': 256,
-            'tolerance': 70
-        });
-        console.log(slideout);
-        self.slideout = slideout;
-        slideout.toggle();
     },
 
     search: function(value) {
