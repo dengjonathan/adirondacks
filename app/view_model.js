@@ -5,8 +5,8 @@ var viewModel = function() {
     self.locations = ko.observableArray([]);
     this.status = ko.observable('active');
     self.center = ko.observable({
-        lat: 44.1899178,
-        lng: -73.7866135
+        lat: 44.1992034912109,
+        lng: -73.786865234375
     });
     self.mapDiv = document.getElementById('map');
     self.map = {};
@@ -113,10 +113,21 @@ viewModel.prototype = {
     },
 
     removeMarkers: function() {
-        var self = this;
         // set all current markers to null
-        self.filtered_locations().forEach(function(location) {
+        this.filtered_locations().forEach(function(location) {
             location.marker.setMap(null);
+        });
+    },
+
+    addBounce: function() {
+        this.filtered_locations().forEach(function(location) {
+            location.marker.setAnimation(google.maps.Animation.BOUNCE);
+        });
+    },
+
+    removeBounce: function() {
+        this.filtered_locations().forEach(function(location) {
+            location.marker.setAnimation(null);
         });
     },
 
@@ -179,8 +190,10 @@ viewModel.prototype = {
 // And the monster is alive!
 appViewModel = new viewModel(data);
 
-//need to wait until after Yelp API returns to apply Ko bindings
+// wait until after Yelp API returns to drop markers and implement search
 $.when($.ajax(appViewModel.yelp_settings())).then(function() {
-    appViewModel.init();
-    ko.applyBindings(appViewModel);
+    appViewModel.addMarkers();
+    appViewModel.search();
 });
+appViewModel.init();
+ko.applyBindings(appViewModel);

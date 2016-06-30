@@ -10,6 +10,7 @@
     <script type='text/javascript' src="bower_components/oauth-signature/dist/oauth-signature.js"></script>
     <script type='text/javascript' src="bower_components/urijs/src/URI.js"></script>
     <script type='text/javascript' src="bower_components/crypto-js/crypto-js.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link type='text/css' rel='stylesheet' href='styles/styles.css' />
 </head>
 
@@ -34,12 +35,11 @@
             </form>
         </div>
         </br>
-        <div>
+        <div class='locations overlay col-md-3'>
             <h3>Locations</h3>
             <table>
-                <th>
-                    Search by Name
-                    <input placeholder="Enter keyword" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+              <th>
+
                 </th>
                 <tbody data-bind='foreach: filtered_locations'>
                     <tr>
@@ -50,7 +50,6 @@
                 </tbody>
             </table>
         </div>
-
     </nav>
 
     <main id='panel'>
@@ -60,10 +59,8 @@
                 <h3>Dacks Climber</h3>
             </div>
         </div>
-        <p>
-            Locations number
-        </p>
-        <p data-bind='text: $root.locations().length'></p>
+        Search by Name
+            <input placeholder="Enter keyword" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
 
         <div id='map'>Map Loading</div>
 

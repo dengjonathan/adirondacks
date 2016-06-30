@@ -2,12 +2,20 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: 'Lato', sans-serif;
+}
+
+.locations{
+  overflow-y: scroll;
 }
 
 #map {
   width: available;
   height: 1000px;
+  z-index: 0;
+  position: absolute;
 }
+
 
 body {
   width: 100%;
@@ -15,12 +23,18 @@ body {
 }
 
 nav{
-  background-color:#b3cccc;
+  background-color:  #91A8d0;
   box-shadow: 10px 10px 5px #888888;
+  color: #ffffff;
 }
 
+input {
+  background-color: #f7cac9;
+}
+
+
 main {
-  background-color:  #6F90A2;
+  background-color: #91A8d0;
 }
 
 .locations{
@@ -28,7 +42,8 @@ main {
   height: 600px;
 }
 
-.navbar{
+button{
+  background-color: #fae03c
 }
 
 .slideout-menu {
