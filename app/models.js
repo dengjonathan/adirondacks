@@ -85,8 +85,10 @@ var Location = function(arg) {
     // when marker is clicked will open up info window
     this.marker.addListener('click', function() {
         var view_model = appViewModel
+        toggleBounce(this);
         if (view_model.selectedLocation()) {
             view_model.selectedLocation().infowindow.close();
+            toggleBounce(view_model.selectedLocation().marker)
         }
         view_model.selectedLocation(self);
         self.infowindow.open(map, self.marker);
@@ -133,7 +135,14 @@ var Marker = function(name, position, loc_type) {
             icon: icon,
         });
     } catch (error) {
-      alert('Google API failed to load and error is ' + error)
+        alert('Google API failed to load and error is ' + error)
     }
-
 };
+
+function toggleBounce(marker) {
+    if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+    } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+}
