@@ -87,7 +87,7 @@
       return yelp_settings
     },
 
-  initMap: function() {
+    initMap: function() {
       this.map = new Map(this.mapDiv, this.center());
     },
 
@@ -149,8 +149,6 @@
     // initializies ViewModel with map and adds markers
     init: function() {
       this.loadData();
-      this.initMap();
-      this.addMarkers();
       this.query.subscribe(this.search.bind(this));
       // show error if map doesn't load
       setTimeout(this.checkMap, 3000)
@@ -159,6 +157,9 @@
 
   // And the monster is alive!
   var appViewModel = new ViewModel(data);
+
+  // TODO: wait until map is loaded to do map specific actions
+  $.when(appViewModel.initMap()).then(appViewModel.addMarkers());
 
   // add new markers when Yelp API Ajax request returns
   $.when($.ajax(appViewModel.yelp_settings())).then(function() {

@@ -55,14 +55,11 @@ var data = [{
 information */
 var Location = function(arg) {
   var self = this;
-  this.name = ko.observable(arg.name);
+  self.name = ko.observable(arg.name);
   this.position = {
     lat: ko.observable(arg.position.lat),
     lng: ko.observable(arg.position.lng)
   };
-  this.location = ko.computed(function() {
-    return self.position.lat() + ", " + self.position.lng();
-  });
   this.desc = ko.observable(arg.desc);
   this.loc_type = ko.observable(arg.loc_type);
   this.icon = LOC_ICONS[this.loc_type()];
@@ -78,11 +75,12 @@ var Location = function(arg) {
   // hard code the contents of the infowindow
   var content = '<h2 data-bind="$data"><a href="' + this.mobile_url() + '">' + this.name() + '</a></h2>';
   content += '<p>' + this.desc() + '</p>';
-  content += '<p>Phone: ' + this.phone() + '</p>';
+  // FIXME: change info window content to take out if not available
+  content += '<p>Phone: ' + this.phone() ? this.phone() : 'phone not available' + '</p>';
   content += '<p data-bind="text: status">Yelp Rating: ' + this.rating() + '</p>';
   content += '<img src="' + this.image_url() + '">';
-  this.infowindow = new google.maps.InfoWindow();
-  this.infowindow.setContent(content);
+  this.infowindow = new google.maps.InfoWindow({content:content});
+  //this.infowindow.setContent(content);
 
   // when marker is clicked will open up info window
   this.marker.addListener('click', function() {

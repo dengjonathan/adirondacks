@@ -24,5 +24,9 @@ describe('viewModel test suite', function() {
       return;
     ])
 
-  })
+  });
+
+  describe('Location object', function(){
+    
+  });
 });
