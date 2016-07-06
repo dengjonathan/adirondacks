@@ -1,69 +1,59 @@
 <!DOCTYPE html>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
 <html>
 
 <head>
-    <script type='text/javascript' src="components/jquery.min.js"></script>
-    <script type='text/javascript' src='components/knockout.js'></script>
-    <script type='text/javascript' src='components/bootstrap.min.js'></script>
-    <script type='text/javascript' src="components/oauth-signature.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link type='text/css' rel='stylesheet' href='styles/styles.css' />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Adirondacks Neighborhood Guide</title>
 </head>
 
 <body>
 
-    <div class='cover-div functions'>
-        <h3 class='error' data-bind='text: error'></h3>
-        <div id='search-div'>
+    <aside class="cover-div functions">
+        <h3 class="error" data-bind="text: error"></h3>
+        <div id="search-div">
             <h3>Search Locations</h3>
             <input placeholder="Keyword" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
         </div>
 
-        <div class='center-map'>
+        <div class="center-map">
             <h3>Map Center</h3>
-            <form data-bind='submit: changeCenter'>
-                <table>
-                    <tr>
-                        <span>LAT: <input name='lat' data-bind='value: center().lat'/></span></br>
-                    </tr>
-                    <tr>
-                        <span data-bind: 'text: status'>LNG: <input name='lng' data-bind='value:center().lng' /></span>
-                    </tr>
-                    </br>
-                    <tr>
-                        <button type="submit">Change Map Center</button>
-                    </tr>
-                </table>
+            <form data-bind="submit: changeCenter">
+                <span>LAT: <input name="lat" data-bind="value: center().lat"></span>
+                <span data-bind="text: status">LNG: <input name="lng" data-bind="value:center().lng"></span>
+                <button type="submit">Change Map Center</button>
             </form>
         </div>
 
-        <div class='locations'>
+        <div class="locations">
             <h3>Locations</h3>
             <table>
-                <th>
-
-                </th>
-                <tbody data-bind='foreach: filtered_locations'>
+                <tbody data-bind="foreach: filtered_locations">
                     <tr>
-                        <td data-bind='text: $data.name'></td>
+                        <td data-bind="text: $data.name"></td>
                     </tr>
                 </tbody>
             </table>
         </div>
-    </div>
+    </aside>
 
-    <div id='map'>
-      Map Loading
-    </div>
+    <main>
+        <div id="map">
+            Map Loading
+        </div>
+    </main>
+    <script src="components/jquery.min.js"></script>
+    <script src="components/knockout.js"></script>
+    <script src="components/bootstrap.min.js"></script>
+    <script src="components/oauth-signature.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="styles/styles.css" />
+    <script src="app/secrets.js"></script>
+    <!-- FIXME: when loading async models requiring google maps don't load correctly-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw" async></script>
+    <script src="app/models.js"></script>
+    <script src="app/view_model.js"></script>
 
-
-    <div id='map'>Map Loading</div>
-
-
-    <!-- google map API script -->
-    <script type='text/javascript' src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw"></script>
-    <script type='text/javascript' src='app/models.js'></script>
-    <script type='text/javascript' src="app/view_model.js"></script>
 </body>
+
+</html>

@@ -1,3 +1,0 @@
-{
-google_maps key: 'AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw'
-}
