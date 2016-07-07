@@ -15,8 +15,8 @@ var SECRETS = {
     getConsumerKey: function(){
       return 'QbAL_pqgAo730xi3DAC2qA';
     },
-    // returns Yelop Oauth Token
+    // returns Yelp Oauth Token
     getOAuthToken: function(){
-      return 'aZbbpsTdhq9869cQVdja221aJaFuDqv';
+      return 'aBZbbpsTdhq9869cQVdja221aJaFuDqv';
     }
 };

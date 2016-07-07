@@ -6,33 +6,39 @@ describe('viewModel test suite', function() {
 
   describe('viewModel with properties', function() {
     it('has a center location with lat/long', function() {
-      expect(typeof(viewModel.center().lat)).toBe('number')
+      expect(typeof(viewModel.center().lat)).toBe('number');
     });
   })
 
-  describe('app should send and recieve Async requests', function() {
+  describe('app should have Google Maps functionality', function() {
+    var map, mapCanvas;
 
-    it('should send and recieve a Google Maps call', function() {
-      var status;
-      // var GOOGLE_MAPS_URL = 'https://maps.googleapis.com/maps/api/js?key=';
-      // GOOGLE_MAPS_URL += SECRETS.getGoogleMapsKey();
-      $.getScript(GOOGLE_MAPS_URL, function(data, textStatus, jqxhr) {
-        status = jqxhr;
-      })
-      console.log(status);
-      expect(status).toBe(200);
+    beforeEach(function() {
+      // create fake DOM element for map
+      mapCanvas = document.createElement("div");
+      mapCanvas.setAttribute("id", 'map-canvas');
+      // map instance
+      map = new google.maps.Map(mapCanvas);
     });
 
-    it('should send and recieve Yelp API calls', function() {
-      return;
-    });
 
-    it('should populate self.locations when Yelp API returns', function() {
-      return;
-    });
+    it('should create map based on call to google Maps API', function() {
+      //send some test to google maps
+
+    }) console.log(status);
+    expect(status).toBe(200);
   });
 
-  describe('Location object', function() {
+  it('should send and recieve Yelp API calls', function() {
+    return;
+  });
 
+  it('should populate self.locations when Yelp API returns', function() {
+    return;
   });
 });
+
+// describe('Location object', function() {
+//
+// });
+// });

@@ -73,44 +73,29 @@ var Location = function(arg) {
   // creates google map marker
   this.marker = new Marker(this.name(), this.position, this.loc_type());
   // hard code the contents of the infowindow
-  var content = '<h2 data-bind="$data"><a href="' + this.mobile_url() + '">' + this.name() + '</a></h2>';
+  var content = '<h2><a href="' + this.mobile_url() + '">' + this.name() + '</a></h2>';
   content += '<p>' + this.desc() + '</p>';
   // FIXME: change info window content to take out if not available
-  content += '<p>Phone: ' + this.phone() ? this.phone() : 'phone not available' + '</p>';
+  content += '<p>Phone: ' + this.phone() || 'phone not available' + '</p>';
   content += '<p data-bind="text: status">Yelp Rating: ' + this.rating() + '</p>';
   content += '<img src="' + this.image_url() + '">';
   this.infowindow = new google.maps.InfoWindow({content:content});
-  //this.infowindow.setContent(content);
 
-  // when marker is clicked will open up info window
-  this.marker.addListener('click', function() {
+// FIXME: seperate out this functionality into viewModel
+  this.openWindow = function() {
     var view_model = appViewModel
-    toggleBounce(this);
+    toggleBounce(this.marker);
     if (view_model.selectedLocation()) {
       view_model.selectedLocation().infowindow.close();
       toggleBounce(view_model.selectedLocation().marker)
     }
-    view_model.selectedLocation(self);
-    self.infowindow.open(map, self.marker);
-  });
+    view_model.selectedLocation(this);
+    self.infowindow.open(map, this.marker);
+  }
+  // when marker is clicked will open up info window
+  this.marker.addListener('click', this.openWindow.bind(this));
 
   this.marker.addListener();
-};
-
-Location.prototype = {
-  changeName: function(name) {
-    this.loc_name = name;
-  },
-};
-
-// Google Map object constructor
-var Map = function(mapDiv, center_pos, options) {
-  var mapOptions = options || {
-    center: center_pos,
-    zoom: 11,
-    mapTypeId: google.maps.MapTypeId.HYBRID
-  };
-  return new google.maps.Map(mapDiv, mapOptions);
 };
 
 // Reference to marker icons

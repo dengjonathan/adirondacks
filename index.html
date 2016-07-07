@@ -16,15 +16,6 @@
             <input placeholder="Keyword" type="search" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
         </div>
 
-        <div class="center-map">
-            <h3>Map Center</h3>
-            <form data-bind="submit: changeCenter">
-                <span>LAT: <input name="lat" data-bind="value: center().lat"></span>
-                <span data-bind="text: status">LNG: <input name="lng" data-bind="value:center().lng"></span>
-                <button type="submit">Change Map Center</button>
-            </form>
-        </div>
-
         <div class="locations">
             <h3>Locations</h3>
             <table>
@@ -38,9 +29,13 @@
     </aside>
 
     <main>
-        <div id="map">
-            Map Loading
+
+        <div id='map_container'>
+            <div id="map">
+                Map Loading
+            </div>
         </div>
+
     </main>
     <script src="components/jquery.min.js"></script>
     <script src="components/knockout.js"></script>
@@ -49,12 +44,10 @@
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="styles/styles.css" />
     <script src="app/secrets.js"></script>
-    <!-- FIXME: when loading async models requiring google maps don't load correctly-->
-    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw" async></script> -->
     <script src="app/models.js"></script>
     <script src="app/view_model.js"></script>
-    <script src="app/GM_API.js"></script>
-
+    <script src="app/API_calls.js"></script>
+    <script src="app/app.js"></script>
 
 </body>
 

@@ -4,62 +4,31 @@
   function ViewModel() {
     var self = this;
     self.locations = ko.observableArray([]);
-    self.center = ko.observable({
+    self.center = {
       lat: 44.1992034912109,
       lng: -73.786865234375
-    });
-    self.mapDiv = document.getElementById('map');
+    };
     self.map = {};
     self.query = ko.observable('');
+    self.selectedLocation = ko.observable('');
     self.filtered_locations = ko.observableArray(self.locations());
-    self.selectedLocation = ko.observable();
     self.error = ko.observable();
-  };
+  }
 
   //viewmodel methods
   ViewModel.prototype = {
 
-    //FIXME: seperate out to google maps functionality out of the viewModel
-    // initMap: function() {
-    //   this.map = new Map(this.mapDiv, this.center());
-    // },
-
-    changeCenter: function(arg) {
-      this.center = ko.observable({
-        lat: parseInt($(arg.lat).val()),
-        lng: parseInt($(arg.lng).val())
-      })
-      // FIXME: seperate out map concerns
-      this.initMap();
-    },
-
-    addMarkers: function() {
-      // var self = this;
-      // self.filtered_locations().forEach(function(location) {
-      //   location.marker.setAnimation(google.maps.Animation.DROP);
-      //   location.marker.setMap(self.map);
-      // })
-    },
-
-    removeMarkers: function() {
-      // // FIXME: hide/show markers rather than take them off the map every time
-      // // set all current markers to null
-      // this.filtered_locations().forEach(function(location) {
-      //   location.marker.setVisible(true);
-      // });
-    },
-
+    // load all initial climbing locations from data model
     loadData: function() {
-      // load all initial climbing locations
-      console.log('loadData called');
       var self = this;
       data.forEach(function(e) {
-        self.locations().push(new Location(e));
+        self.locations.push(new Location(e));
       });
     },
 
+    // updates markers on map and list in response to search term
     search: function(value) {
-      this.removeMarkers();
+      this.map.hideMarkers();
       var locations = this.locations();
       if (value) {
         this.filtered_locations(
@@ -70,37 +39,22 @@
       } else {
         this.filtered_locations(locations);
       }
-      this.addMarkers();
+      this.map.showMarkers(this.filtered_locations());
     },
 
-    //seperate out map concerns
-    // checkMap: function() {
-    //   if (!self.map) {
-    //     self.error = 'Error loading map';
-    //   }
-    //   console.log(self.map);
-    // },
-
     // initializies ViewModel with map and adds markers
-    init: function() {
+    initMapFeature: function() {
       this.loadData();
+      this.filtered_locations(this.locations());
+      initMap(this);
+      this.map.addMarkers(this.locations());
       this.query.subscribe(this.search.bind(this));
-      // show error if map doesn't load
-      setTimeout(this.checkMap, 3000)
+    },
+
+    /* updates locations list and map markers when locations added, i.e.
+     when Yelp API returns locations */
+    addLocations: function() {
+      this.filtered_locations(this.locations());
+      this.map.addMarkers(this.locations());
     }
   };
-
-  // And the monster is alive!
-  var appViewModel = new ViewModel(data);
-
-  // TODO: wait until map is loaded to do map specific actions
-  $.when(appViewModel.initMap()).then(appViewModel.addMarkers());
-
-  // add new markers when Yelp API Ajax request returns
-  $.when($.ajax(appViewModel.yelp_settings())).then(function() {
-    appViewModel.addMarkers();
-    appViewModel.search();
-  });
-
-  appViewModel.init();
-  ko.applyBindings(appViewModel);
