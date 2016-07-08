@@ -2,7 +2,8 @@
   "use strict";
 
   /*
-  MODEL - this section contains initial data (which would be requested from DB
+  ***MODEL***
+  This section contains initial data (which would be requested from DB
   in a server side app) as well as constructors for objects used by the
   viewModel
   */
@@ -11,9 +12,8 @@
   var data = JSON.parse(database);
 
   /*
-  Creates a location object including marker and relevant info
     @constructor
-    @param {object} arg: arguments object including properties of location
+    @param {object} arg: properties of location object
   */
   var Location = function(arg) {
     var self = this;
@@ -26,66 +26,61 @@
     this.loc_type = ko.observable(arg.loc_type);
     this.icon = LOC_ICONS[this.loc_type()];
 
-    //additional data from yelp
-    this.phone = ko.observable(arg.phone);
-    this.image_url = ko.observable(arg.image_url);
-    this.mobile_url = ko.observable(arg.mobile_url);
-    this.rating = ko.observable(arg.rating);
+    // data only available for locations loaded from Yelp API
+    this.phone = ko.observable(arg.phone || 'Info unavailable for this location.');
+    this.image_url = ko.observable(arg.image_url || 'Info unavailable for this location.');
+    this.mobile_url = ko.observable(arg.mobile_url || 'Info unavailable for this location.');
+    this.rating = ko.observable(arg.rating || 'Info unavailable for this location.');
 
-    // creates google map marker
+    // Each location has a google map marker
     this.marker = new Marker(this.name(), this.position, this.loc_type());
     // hard code the contents of the infowindow
     var content = '<h2><a href="' + this.mobile_url() + '">' + this.name() + '</a></h2>';
     content += '<p>' + this.desc() + '</p>';
-    // FIXME: change info window content to take out if not available
-    content += '<p>Phone: ' + this.phone() || 'phone not available' + '</p>';
+    content += '<p>Phone: ' + this.phone() + '</p>';
     content += '<p data-bind="text: status">Yelp Rating: ' + this.rating() + '</p>';
     content += '<img src="' + this.image_url() + '">';
     this.infowindow = new google.maps.InfoWindow({
       content: content
     });
 
-    // FIXME: seperate out this functionality into viewModel
     this.openWindow = function() {
-        var view_model = appViewModel
-        toggleBounce(this.marker);
-        if (view_model.selectedLocation()) {
-          view_model.selectedLocation().infowindow.close();
-          toggleBounce(view_model.selectedLocation().marker)
-        }
-        view_model.selectedLocation(this);
-        self.infowindow.open(map, this.marker);
+      var view_model = appViewModel;
+      toggleBounce(this.marker);
+      if (view_model.selectedLocation()) {
+        view_model.selectedLocation().infowindow.close();
+        toggleBounce(view_model.selectedLocation().marker);
       }
+      view_model.selectedLocation(this);
+      self.infowindow.open(map, this.marker);
+    };
     // when marker is clicked will open up info window
     this.marker.addListener('click', this.openWindow.bind(this));
-
-    this.marker.addListener();
   };
 
   // Reference to marker icons
   var LOC_ICONS = {
     climb: 'images/climb.gif',
     food: 'images/food.png',
-    gear: 'images/gear.gif',
-    camp: 'images/camp.gif'
   };
 
-  // Google Map marker constructor
+  /*
+    @constructor
+    @param {string} name
+    @param {object} position: obj with properties lat, lng
+    @param {string} loc_type: 'climb' or 'food'
+  */
   var Marker = function(name, position, loc_type) {
     var icon = LOC_ICONS[loc_type];
-    try {
-      return new google.maps.Marker({
-        name: name,
-        position: {
-          lat: position.lat(),
-          lng: position.lng()
-        },
-        animation: google.maps.Animation.DROP,
-        icon: icon,
-      });
-    } catch (error) {
-      alert('Google API failed to load and error is ' + error)
-    }
+    return new google.maps.Marker({
+      name: name,
+      position: {
+        lat: position.lat(),
+        lng: position.lng()
+      },
+      animation: google.maps.Animation.DROP,
+      icon: icon,
+    });
   };
 
   function toggleBounce(marker) {
@@ -97,13 +92,14 @@
   }
 
   /*
-  This module makes helper functions for async calls in app.js
+  ***API-CALLS***
+  This section includes helper functions for async calls in app.js
   */
-
   var GOOGLE_MAPS_URL = 'https://maps.googleapis.com/maps/api/js?key=';
   var MAP_DIV = document.getElementById('map');
 
-  /* Initializes map and binds to viewModel
+  /*
+  Initializes map and binds to viewModel
     @requires google Maps API script
     @param {object} ViewModel: KO viewModel instance
   */
@@ -203,7 +199,9 @@
     });
   }
 
-  // viewModel constructor
+  /*
+    ViewModel constructor
+  */
   function ViewModel() {
     var self = this;
     self.locations = ko.observableArray([]);
@@ -262,7 +260,16 @@
     }
   };
 
-
+/*
+  ***APP***
+  This section:
+    1. Initializes ViewModel
+    2. Makes async calls to external APIs
+    3. Updates data in viewModel due to data from API-CALLS
+  This module manages the execution order of scripts, ensuring that functions
+  requiring external scripts to have loaded will wait for these async calls to
+  have responded.
+*/
   // API success flags
   var YELP_LOADED = false;
   var GOOGLE_LOADED = false;
@@ -280,7 +287,7 @@
     appViewModel.initMapFeature();
     GOOGLE_LOADED = true;
   }).fail(function() {
-    var error_msg = 'Google Maps is not working for some reason...'
+    var error_msg = 'Google Maps is not working for some reason...';
     appViewModel.error(error_msg);
     setTimeout(function() {
       error_msg += 'Definitely Google\'s fault, not the developer\'s... ';
@@ -305,7 +312,7 @@
         appViewModel.addLocations();
       }
     }).fail(function() {
-    var error_msg = 'The Yelp API is not working for some reason...'
+    var error_msg = 'The Yelp API is not working for some reason...';
     error_msg += 'But you can still use the app! =)';
     appViewModel.error(error_msg);
   });
