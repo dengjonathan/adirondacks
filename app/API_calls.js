@@ -1,11 +1,5 @@
-/* This module makes async calls to APIs to populate data into viewModel.
-//FIXME
-
-   initMap {function} - makes call to the Google Maps API, binds Map Instancevto viewmodel.map property
-    and displays map in DOM in div with id='map'.
-
-    getYelp {function} - makes call to Yelp API and returns array of location objects populated with data
-     from yelp
+/*
+This module makes helper functions for async calls in app.js
 */
 
 var GOOGLE_MAPS_URL = 'https://maps.googleapis.com/maps/api/js?key=';
@@ -84,7 +78,7 @@ function getYelpSettings(location, term) {
     cache: true, // self is crucial to include as well to prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
     dataType: 'jsonp'
   };
-  return yelp_settings
+  return yelp_settings;
 }
 
 /*

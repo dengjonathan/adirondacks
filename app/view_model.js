@@ -1,5 +1,3 @@
-  "use strict";
-
   // viewModel constructor
   function ViewModel() {
     var self = this;

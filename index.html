@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Adirondacks Neighborhood Guide</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato " rel="stylesheet ">
+    <link type="text/css" rel="stylesheet " href="styles/styles.css " />
 </head>
 
 <body>
@@ -22,6 +24,7 @@
                 <tbody data-bind="foreach: filtered_locations">
                     <tr>
                         <td data-bind="text: $data.name"></td>
+                        <!-- <td data-bind "click: $data.name"</td> -->
                     </tr>
                 </tbody>
             </table>
@@ -37,17 +40,16 @@
         </div>
 
     </main>
-    <script src="components/jquery.min.js"></script>
-    <script src="components/knockout.js"></script>
-    <script src="components/bootstrap.min.js"></script>
-    <script src="components/oauth-signature.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="styles/styles.css" />
-    <script src="app/secrets.js"></script>
-    <script src="app/models.js"></script>
-    <script src="app/view_model.js"></script>
-    <script src="app/API_calls.js"></script>
-    <script src="app/app.js"></script>
+    <script src="components/jquery.min.js "></script>
+    <script src="components/knockout.js "></script>
+    <script src="components/bootstrap.min.js "></script>
+    <script src="components/oauth-signature.min.js "></script>
+    <script src="app/secrets.js "></script>
+    <script src="app/data.js "></script>
+    <!-- <script src="app/models.js "></script>
+    <script src="app/view_model.js "></script>
+    <script src="app/API_calls.js "></script> -->
+    <script src="app/app.js "></script>
 
 </body>
 
