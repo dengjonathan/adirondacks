@@ -2,15 +2,14 @@
 <html>
 
 <head>
+    <title>Adirondacks Neighborhood Guide</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Adirondacks Neighborhood Guide</title>
     <link href="https://fonts.googleapis.com/css?family=Lato " rel="stylesheet ">
     <link type="text/css" rel="stylesheet " href="styles/styles.css " />
 </head>
 
 <body>
-
     <aside class="cover-div functions">
         <h3 class="error" data-bind="text: error"></h3>
         <div id="search-div">
@@ -24,7 +23,9 @@
                 <tbody data-bind="foreach: filtered_locations">
                     <tr>
                         <td data-bind="text: $data.name"></td>
-                        <!-- <td data-bind "click: $data.name"</td> -->
+                        <td>
+                            <button class='btn btn-primary' data-bind="click: $data.openWindow">Select</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -32,13 +33,12 @@
     </aside>
 
     <main>
-
-        <div id='map_container'>
+      <div class='map-container'>
+  
+      </div>
             <div id="map">
                 Map Loading
             </div>
-        </div>
-
     </main>
     <script src="components/jquery.min.js "></script>
     <script src="components/knockout.js "></script>
@@ -46,9 +46,6 @@
     <script src="components/oauth-signature.min.js "></script>
     <script src="app/secrets.js "></script>
     <script src="app/data.js "></script>
-    <!-- <script src="app/models.js "></script>
-    <script src="app/view_model.js "></script>
-    <script src="app/API_calls.js "></script> -->
     <script src="app/app.js "></script>
 
 </body>
