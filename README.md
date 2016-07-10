@@ -14,7 +14,11 @@ To run it on your local machine, clone the repository and cd into the adirondack
 git clone https://github.com/dengjonathan/adirondacks
 cd adirondacks
 ```
-Open the index.html file:
+To make API calls to Google Maps and Yelp, you need to insert your own API keys into the
+'app/secrets.example.js' file.  This file creates a global variable SECRETS which the
+app will reference for API calls.
+
+Once API keys are inserted, open the index.html file to run the app.:
 
 ```
 open index.html
