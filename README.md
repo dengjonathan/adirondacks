@@ -28,3 +28,12 @@ To use the app, click on any marker or location on the list to bring up relevant
 
 Additionally, typing a search term into the keyword input will filter available locations
 based on name.
+
+## Attribution
+This app relies on the following libraries and APIs:
+Google Maps API
+Yelp API
+Knockout
+JQuery
+Bootstrap
+oauth-signature
