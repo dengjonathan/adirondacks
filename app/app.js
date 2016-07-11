@@ -28,7 +28,7 @@
 
     // data only available for locations loaded from Yelp API
     this.phone = ko.observable(arg.phone || 'Info unavailable for this location.');
-    this.image_url = ko.observable(arg.image_url || 'Info unavailable for this location.');
+    this.image_url = ko.observable(arg.image_url);
     this.mobile_url = ko.observable(arg.mobile_url || 'Info unavailable for this location.');
     this.rating = ko.observable(arg.rating || 'Info unavailable for this location.');
 
@@ -39,23 +39,23 @@
     content += '<p>' + this.desc() + '</p>';
     content += '<p>Phone: ' + this.phone() + '</p>';
     content += '<p data-bind="text: status">Yelp Rating: ' + this.rating() + '</p>';
-    content += '<img src="' + this.image_url() + '">';
+    content += this.image_url() ? '<img src="' + this.image_url() + '">' : '<p>No Image Available for this location</p>';
     this.infowindow = new google.maps.InfoWindow({
       content: content
     });
-
-    this.openWindow = function() {
-      var view_model = appViewModel;
-      toggleBounce(this.marker);
-      if (view_model.selectedLocation()) {
-        view_model.selectedLocation().infowindow.close();
-        toggleBounce(view_model.selectedLocation().marker);
-      }
-      view_model.selectedLocation(this);
-      self.infowindow.open(map, this.marker);
-    };
     // when marker is clicked will open up info window
     this.marker.addListener('click', this.openWindow.bind(this));
+  };
+
+  Location.prototype.openWindow = function() {
+    var view_model = appViewModel;
+    toggleBounce(this.marker);
+    if (view_model.selectedLocation()) {
+      view_model.selectedLocation().infowindow.close();
+      toggleBounce(view_model.selectedLocation().marker);
+    }
+    view_model.selectedLocation(this);
+    this.infowindow.open(map, this.marker);
   };
 
   // Reference to marker icons
@@ -260,16 +260,16 @@
     }
   };
 
-/*
-  ***APP***
-  This section:
-    1. Initializes ViewModel
-    2. Makes async calls to external APIs
-    3. Updates data in viewModel due to data from API-CALLS
-  This module manages the execution order of scripts, ensuring that functions
-  requiring external scripts to have loaded will wait for these async calls to
-  have responded.
-*/
+  /*
+    ***APP***
+    This section:
+      1. Initializes ViewModel
+      2. Makes async calls to external APIs
+      3. Updates data in viewModel due to data from API-CALLS
+    This module manages the execution order of scripts, ensuring that functions
+    requiring external scripts to have loaded will wait for these async calls to
+    have responded.
+  */
   // API success flags
   var YELP_LOADED = false;
   var GOOGLE_LOADED = false;

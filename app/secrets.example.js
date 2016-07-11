@@ -4,22 +4,47 @@ API calls work, fill in values below */
 var SECRETS = {
     // returns Google Maps API key
     getGoogleMapsKey: function(){
-      return 'FILL_ME_IN';
+      return 'AIzaSyD7QeUbl2kO7TPllayriD04AkBdkoqBTWw';
     },
     // returns Yelp consumer secret
     getConsumerSecret: function() {
-      return 'FILL_ME_IN';
+      return 'fTfDa0IIFU0QzF7caXw3Ba9-bEQ';
     } ,
     // returns Yelp token Secret
-    tokenSecret: function(){
-      return 'FILL_ME_IN';
+    getTokenSecret: function(){
+      return 'hH68LJgKUkwLNhUf0Yavw6jdVes';
     },
     // returns Yelp oauth_consumer_key
-    oauth_consumer_key: function(){
-      return 'FILL_ME_IN';
+    getConsumerKey: function(){
+      return 'QbAL_pqgAo730xi3DAC2qA';
     },
-    // returns Yelop Oauth Token
-    oauth_token: function(){
-      return 'FILL_ME_IN';
+    // returns Yelp Oauth Token
+    getOAuthToken: function(){
+      return 'aBZbbpsTdhq9869cQVdja221aJaFuDqv';
     }
 };
+
+//
+//
+// var SECRETS = {
+//     // returns Google Maps API key
+//     getGoogleMapsKey: function(){
+//       return 'FILL_ME_IN';
+//     },
+//     // returns Yelp consumer secret
+//     getConsumerSecret: function() {
+//       return 'FILL_ME_IN';
+//     } ,
+//     // returns Yelp token Secret
+//     getTokenSecret: function(){
+//       return 'FILL_ME_IN';
+//     },
+//     // returns Yelp oauth_consumer_key
+//     getConsumerKey: function(){
+//       return 'FILL_ME_IN';
+//     },
+//     // returns Yelop Oauth Token
+//     getOAuthToken: function(){
+//       return 'FILL_ME_IN';
+//     }
+// };
