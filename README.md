@@ -30,10 +30,10 @@ Additionally, typing a search term into the keyword input will filter available 
 based on name.
 
 ## Attribution
-This app relies on the following libraries and APIs: \n
-Google Maps API \n
-Yelp API \n
-Knockout \n
-JQuery \n
-Bootstrap \n
-oauth-signature \n
+This app relies on the following libraries and APIs:
+* Google Maps API
+* Yelp API
+* Knockout
+* JQuery
+* Bootstrap
+* oauth-signature
